@@ -6,7 +6,12 @@ from rest_framework.serializers import Serializer
 from .models import Annonce
 from .serializers import AnnonceSerializer
 from annonce import serializers
-from .utils import updateAnnonce, getAnnonceDetail, deleteAnnonce, getAnnoncesList, createAnnonce
+from .utils import updateAnnonce, getAnnonceDetail, deleteAnnonce, getAnnoncesList, createAnnonce , getAnnounceByName
+from django.shortcuts import get_object_or_404
+from rest_framework import filters , generics
+# from django_filters.rest_framework import DjangoFilterBackend
+
+
 # Create your views here.
 
 
@@ -25,6 +30,13 @@ def getRoutes(request):
             'method': 'GET',
             'body': None,
             'description': 'Returns a single Annonce object'
+        },
+        {
+            'Endpoint': '/search/keyword=name',
+
+            'method': 'GET',
+            'body': None,
+            'description': 'Returns annonces by name '
         },
         {
             'Endpoint': '/annonces/create/',
@@ -69,4 +81,21 @@ def getAnnonce(request, pk):
     if request.method == 'DELETE':
         return deleteAnnonce(request, pk)
 
+@api_view(['GET'])
+def getAnnounceByNameView(request, name):
 
+    return getAnnounceByName(request, name)
+
+
+class AnnonceSearch(generics.ListAPIView):
+    # permission_classes = [AllowAny]
+    queryset = Annonce.objects.all()
+    serializer_class = AnnonceSerializer
+    filter_backends = [filters.SearchFilter]
+    # DjangoFilterBackend
+    search_fields = ['^title' ]
+    filterset_fields = ["body", "created"]
+
+# http://127.0.0.1:8000/api/annonces/custom/?search=second&body=testing+df
+# http://127.0.0.1:8000/api/annonces/custom/?search=second&created=2022-12-13T22:24:26.615288Z
+# http://127.0.0.1:8000/api/annonces/custom/?search=second&created__get2022-12-13T00:00:00.000000Z
