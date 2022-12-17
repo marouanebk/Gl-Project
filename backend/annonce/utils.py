@@ -1,6 +1,6 @@
 from rest_framework import generics
 from rest_framework.response import Response
-from .models import Annonce
+from .models import Annonce , Photo
 from .serializers import AnnonceSerializer
 from django.shortcuts import get_object_or_404
 from rest_framework import filters
@@ -10,6 +10,9 @@ from rest_framework import filters
 
 def getAnnoncesList(request):
     notes = Annonce.objects.all().order_by('-updated')
+    # notes = Annonce.objects.prefetch_related('tracks')
+
+    # images = Photo.objects.all()
     serializer = AnnonceSerializer(notes, many=True)
     return Response(serializer.data)
 

@@ -8,11 +8,18 @@ class Annonce(models.Model):
     body = models.TextField(null=True, blank=True)
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
-    adr = models.ForeignKey("Adress", verbose_name=("Adress"), on_delete=models.CASCADE , null = True )
+    # adr = models.ForeignKey("Adress", verbose_name=("Adress"), on_delete=models.CASCADE , null = True )
 
 
     def __str__(self):
         return self.title
+
+class Photo(models.Model):
+    owner = models.ForeignKey("annonce", related_name=("photos"), on_delete=models.CASCADE)
+    desc = models.CharField( max_length=50)
+    def __str__(self):
+        return "owner : "+self.owner.title+" desc : "+self.desc
+
 
 
 class Adress(models.Model):
@@ -22,3 +29,23 @@ class Adress(models.Model):
 
     def __str__(self):
         return self.commune + " " +self.wilaya
+
+class Person(models.Model):
+    fname = models.CharField(max_length=20,blank=True)
+
+    def __str__(self):
+        return self.fname
+
+
+
+class Fav(models.Model):
+    liker = models.ForeignKey("Person", verbose_name=("Person"), on_delete=models.CASCADE)
+    ad  = models.ForeignKey("Adress", verbose_name=("Annonce"), on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.liker.fname+" "+self.ad.title
+
+    class Meta:
+       unique_together = ("liker", "ad")
+
+
