@@ -30,6 +30,10 @@ def createAnnonce(request):
         title=data['title']
 
     )
+    image = Photo.objects.create(
+        owner = note,
+        desc = data['desc']
+    )
     serializer = AnnonceSerializer(note, many=False)
     return Response(serializer.data)
 
