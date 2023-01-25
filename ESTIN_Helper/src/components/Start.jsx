@@ -22,7 +22,7 @@ const Start = () => {
           Our team of experts create this site to help student to find
           solution to their problems, and also help each others.
         </p>
-          <Link style={{ cursor:"pointer" }} className={`${styles.paragraph} mt-8 text-[20px]  pt-5 pb-5 pl-11 pr-11 mb-0 font-poppins text-primary font-medium cursor-pointer text-[16px] items-start bg-blue-gradient rounded-[10px]`} to={'/Sign-up'}>
+          <Link style={{ cursor:"pointer" }} className={`${styles.paragraph} mt-8 text-[20px]  pt-5 pb-5 pl-11 pr-11 mb-0 font-poppins text-primary font-medium cursor-pointer items-start bg-blue-gradient rounded-[10px]`} to={'/Sign-up'}>
               Register
           </Link>
       </div>

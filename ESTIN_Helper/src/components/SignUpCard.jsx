@@ -39,7 +39,7 @@ const SignUpCard = () => (
                   <input type="password" placeholder="Confirm password"/>
               </div>
           </div>
-          <Link style={{ cursor:"pointer" }} className={`${styles.paragraph} mt-4 text-[14px]  pt-3 pb-3 pl-6 pr-6 mb-0 font-poppins text-primary font-medium cursor-pointer text-[30px] items-start bg-blue-gradient rounded-[30px]`} to={'/Sign-in'}>
+          <Link style={{ cursor:"pointer" }} className={`${styles.paragraph} mt-4 text-[20px]  pt-4 pb-4 pl-8 pr-8 mb-0 font-poppins text-primary font-medium cursor-pointer items-start bg-blue-gradient rounded-[30px]`} to={'/Home'}>
               Sign up
           </Link>
           <center></center>
@@ -52,7 +52,7 @@ const SignUpCard = () => (
           </Link>
       </center>
   </section>
-    </center>   
+    </center>
 );
 
 export default SignUpCard;

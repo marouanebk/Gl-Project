@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { close, logo, menu } from "../assets";
+import { close, menu } from "../assets";
 import { navLinks } from "../constants";
 import styles from "../style.js";
 import {Link} from "react-router-dom";
@@ -11,8 +11,9 @@ function Navbar() {
 
   return (
     <nav className="w-full flex py-6 justify-between items-center navbar">
-      <img src={logo} alt="EstinHelper" className="w-[100px] h-[100px]" />
-
+        <h1 className="flex-1 font-poppins font-semi-bold ss:text-[22px] text-[22px] text-white ss:leading-[100.8px] leading-[75px]">
+            ESTIN <span className="text-gradient"> Helper</span>
+        </h1>
       <ul className="list-none sm:flex hidden justify-end items-center flex-1">
         {navLinks.map((nav, index) => (
           <li
@@ -25,7 +26,7 @@ function Navbar() {
             <a href={`#${nav.id}`}>{nav.title}</a>
           </li>))}
           <li>
-              <Link style={{ cursor:"pointer" }} className={`${styles.paragraph} mt-1 ml-8 text-[16px]  pt-3 pb-3 pl-6 pr-6 mb-0 font-poppins text-primary font-medium cursor-pointer text-[16px] items-start bg-blue-gradient rounded-[30px]`} to={'/Sign-in'}>
+              <Link style={{ cursor:"pointer" }} className={`${styles.paragraph} mt-1 ml-8 text-[16px]  pt-3 pb-3 pl-6 pr-6 mb-0 font-poppins text-primary font-medium cursor-pointer items-start bg-blue-gradient rounded-[30px]`} to={'/Sign-in'}>
                   Sign in
               </Link>
           </li>

@@ -17,16 +17,16 @@ const SignInCard = () => (
               <img src={facebook} className="absolute ml-4 w-8" alt="Password icon"/>
               <input type="password" placeholder="Password"/>
           </div>
-          <Link style={{ cursor:"pointer" }} className={`${styles.paragraph} mt-4 text-[14px]  pt-4 pb-4 pl-8 pr-8 mb-0 font-poppins text-primary font-medium cursor-pointer text-[30px] items-start bg-blue-gradient rounded-[30px]`} to={'/Sign-in'}>
+          <Link style={{ cursor:"pointer" }} className={`mt-4 text-[20px]  pt-3 pb-3 pl-7 pr-7 mb-0 font-poppins text-primary font-medium cursor-pointer items-start bg-blue-gradient rounded-[30px]`} to={'/Home'}>
               Sign in
           </Link>
       <p className={`${styles.paragraph} mt-5 text-[20px] mb-5`}>
           Sign in with
       </p>
         <img src={facebook} alt="User" className="w-[45px] h-[45px] mb-10" style={{ cursor:"pointer" }}/>
-          <a style={{ cursor:"pointer" }} href={null} className={`${styles.paragraph} mt-1 text-[15px] mb-0`}>
-              Forgot password?
-          </a>
+          <Link style={{ cursor:"pointer" }} className={`${styles.paragraph} mt-1 text-[17px] mb-0`} to={'/Forgot-password'}>
+              Forgot Password ?
+          </Link>
       </center>
   </section>
     </center>

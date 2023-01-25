@@ -9,6 +9,11 @@ import Navbar1 from "./Navbar1.jsx";
 import SignInCard from "./SignInCard.jsx";
 import SignUpCard from "./SignUpCard.jsx";
 import SignUp from "../pages/SignUp.jsx";
+import ForgotPasswordCard from "./ForgotPasswordCard.jsx";
+import ForgotPassword from "../pages/ForgotPassword.jsx";
+import Navbar2 from "./Navbar2.jsx";
+import Home from "../pages/Home.jsx";
+import AddCard from "./AddCard.jsx";
 export {
     Navbar,
     What,
@@ -21,4 +26,9 @@ export {
     SignIn,
     SignUpCard,
     SignUp,
+    ForgotPassword,
+    ForgotPasswordCard,
+    Navbar2,
+    Home,
+    AddCard,
 };
