@@ -14,6 +14,9 @@ import ForgotPassword from "../pages/ForgotPassword.jsx";
 import Navbar2 from "./Navbar2.jsx";
 import Home from "../pages/Home.jsx";
 import AddCard from "./AddCard.jsx";
+import ProfileCard from "./ProfileCard.jsx";
+import AnnouncementCard from "./AnnouncementCard.jsx";
+import FavoriteCard from "./FavoriteCard.jsx";
 export {
     Navbar,
     What,
@@ -31,4 +34,7 @@ export {
     Navbar2,
     Home,
     AddCard,
+    ProfileCard,
+    AnnouncementCard,
+    FavoriteCard,
 };

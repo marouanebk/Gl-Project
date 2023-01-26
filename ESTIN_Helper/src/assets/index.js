@@ -10,18 +10,26 @@ import facebook from "./facebook.svg";
 import linkedin from "./linkedin.svg";
 import twitter from "./twitter.svg";
 import people from "./people.png";
+import school from "./school.png"
+import notlike from "./notlike.png"
+import comment from "./comment.png"
+import share from "./share.png"
 
 export {
-  bill,
-  logo,
-  image1,
-  send,
-  shield,
-  star,
-  menu,
-  close,
-  facebook,
-  linkedin,
-  twitter,
-  people,
+    bill,
+    logo,
+    image1,
+    send,
+    shield,
+    star,
+    menu,
+    close,
+    facebook,
+    linkedin,
+    twitter,
+    people,
+    school,
+    notlike,
+    comment,
+    share,
 };

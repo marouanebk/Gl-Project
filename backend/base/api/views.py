@@ -29,3 +29,10 @@ def getRoutes(request):
         '/api/token/refresh',
     ]
     return Response(routes)
+@api_view(['GET'])
+def getRoutes(request):
+    routes = [
+        '/api/token',
+        '/api/token/refresh',
+    ]
+    return Response(routes)
