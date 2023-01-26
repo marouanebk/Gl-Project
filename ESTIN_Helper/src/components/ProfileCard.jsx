@@ -3,8 +3,11 @@ import "../index.css"
 import React, {useState} from "react";
 import styles from "../style.js";
 import {AddCard} from "./index.js";
+import { useContext } from "react";
+import AuthContext from "../context/AuthContext.jsx";
 
 function ProfileCard () {
+    let {user} = useContext(AuthContext)
     const [showAddCard, setShowAddCard] = useState(false);
     const handleOnClose = ()=>setShowAddCard(false)
     return(
@@ -17,7 +20,7 @@ function ProfileCard () {
                   </div>
                   <div className="flex flex-col items-center mt-8 gap-3 ">
                       <br/>
-                        <span>Djemaa Abdelmalek</span>
+                        <span>{user.username}</span>
                       <br/>
                   </div>
                 <div className="flex justify-start items-center relative mb-6">

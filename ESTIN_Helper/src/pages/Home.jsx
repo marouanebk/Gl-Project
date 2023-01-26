@@ -3,7 +3,7 @@ import styles from "../style.js";
 import { AddCard, AnnouncementCard, FavoriteCard, Navbar2, ProfileCard } from "../components/index.js";
 import { facebook } from "../assets/index.js";
 
-function Home() {
+function Home() {  
     const [showAddCard, setShowAddCard] = useState(false);
     const handleOnClose = () => setShowAddCard(false)
 
