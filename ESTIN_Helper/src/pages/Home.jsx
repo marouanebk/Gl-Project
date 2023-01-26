@@ -1,9 +1,19 @@
 import React, { useState, useEffect , useCallback } from 'react'
 import styles from "../style.js";
+<<<<<<< HEAD
+import {AddCard, Navbar2} from "../components/index.js";
+import {facebook} from "../assets/index.js";
+import { useContext } from 'react';
+import AuthContext from '../context/AuthContext.jsx';
+
+function Home (){
+    let {user, logoutUser} = useContext(AuthContext)
+=======
 import { AddCard, AnnouncementCard, FavoriteCard, Navbar2, ProfileCard } from "../components/index.js";
 import { facebook } from "../assets/index.js";
 
 function Home() {
+>>>>>>> 734cfa0880173368d800e6a08c962616e8c481e6
     const [showAddCard, setShowAddCard] = useState(false);
     const handleOnClose = () => setShowAddCard(false)
 
@@ -66,12 +76,67 @@ function Home() {
                         onChange={searchHandler} />
                 </div>
             </div>
+<<<<<<< HEAD
+            <div className={`bg-primary ${styles.paddingX} ${styles.flexCenter}`}>
+                <div className={`${styles.boxWidth} bg-blend-color`}>
+                    {user && 
+                    <h1 className="font-poppins font-semi-bold ss:text-[68px] text-[52px] text-white ss:leading-[100.8px] leading-[75px] w-full">
+                    Welcome to Your account {user.username}.
+                    <input onClick={logoutUser} style={{ cursor:"pointer" }} className={`${styles.paragraph} mt-4 text-[14px]  pt-4 pb-4 pl-8 pr-8 mb-0 font-poppins text-primary font-medium cursor-pointer text-[30px] items-start bg-blue-gradient rounded-[30px]`} placeholder='Log out' type=''/>
+                    
+                  </h1>
+                    }
+                    Hello <br/>
+                    Hello <br/>
+                    Hello <br/>
+                    Hello <br/>
+                    Hello <br/>
+                    Hello <br/>
+                    Hello <br/>
+                    Hello <br/>
+                    Hello <br/>
+                    Hello <br/>
+                    Hello <br/>
+                    Hello <br/>
+                    Hello <br/>
+                    Hello <br/>
+                    Hello <br/>
+                    Hello <br/>
+                    Hello <br/>
+                    Hello <br/>
+                    Hello <br/>
+                    Hello <br/>
+                    Hello <br/>
+                    Hello <br/>
+                    Hello <br/>
+                    Hello <br/>
+                    Hello <br/>
+                    Hello <br/>
+                    Hello <br/>
+                    Hello <br/>
+                    Hello <br/>
+                    Hello <br/>
+                    Hello <br/>
+                    Hello <br/>
+                    Hello <br/>
+                    Hello <br/>
+                    Hello <br/>
+                    Hello <br/>
+                    Hello <br/>
+                    Hello <br/>
+                    Hello <br/>
+                    Hello <br/>
+                    Hello <br/>
+                    Hello <br/>
+                    Hello <br/>
+=======
             <div className={`bg-primary`}>
                 <div className="flex flex-wrap sm:flex justify-between ">
                     <div className="min-w-[25%]">
                         <ProfileCard />
                     </div>
                     <div className="min-w-[43%]">
+>>>>>>> 734cfa0880173368d800e6a08c962616e8c481e6
 
                         {records.map((item, index) => (
 
