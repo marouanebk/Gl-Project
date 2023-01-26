@@ -15,10 +15,11 @@ class Annonce(models.Model):
         return self.title
 
 class Photo(models.Model):
-    owner = models.ForeignKey("annonce", related_name=("photos"), on_delete=models.CASCADE)
-    desc = models.CharField( max_length=50)
-    def __str__(self):
-        return "owner : "+self.owner.title+" desc : "+self.desc
+    owner = models.ForeignKey("annonce", related_name=("images"), on_delete=models.CASCADE)
+    # desc = models.CharField( max_length=50)
+    image = models.ImageField(upload_to="img",  null = True , blank = True)
+    # def __str__(self):
+    #     return 
 
 
 

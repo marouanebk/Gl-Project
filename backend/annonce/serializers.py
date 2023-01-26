@@ -15,26 +15,30 @@ class FavSerializer(ModelSerializer):
 class PhotoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Photo 
-        fields = '__all__'
+        # fields = ('id' , 'owner' , 'image')
+        fields = ('id','image')
         depth = 1
 
 class AnnonceSerializer(serializers.ModelSerializer):
-    # photos = serializers.RelatedField(many=True ,read_only=True,)
-    # tracks = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
-    # images = PhotoSerializer(many = True)
-    # tracks = serializers.SlugRelatedField(many=True, read_only=True,slug_field='desc')
-    # tracks = serializers.SlugRelatedField(
-    #     many=True,
-    #     read_only=True,
-    #     slug_field='desc'
-    # )
-    photos = serializers.StringRelatedField(many=True)
+    # photos = serializers.StringRelatedField(many=True)
+    images = PhotoSerializer(many = True , read_only=True)
+    uploaded_images = serializers.ListField(
+        child = serializers.FileField(max_length = 1000000, allow_empty_file = False, use_url = False),
+        write_only = True
+    )
 
 
 
     class Meta:
         model = Annonce
-        fields = ('title','body' ,'created' ,'photos')
+        fields = ('id','title','body' ,'created' ,'images' , 'uploaded_images')
+
+    def create(self, validated_data):
+        uploaded_data = validated_data.pop('uploaded_images')
+        new_product = Annonce.objects.create(**validated_data)
+        for uploaded_item in uploaded_data:
+            new_product_image = Photo.objects.create(owner = new_product, image = uploaded_item)
+        return new_product
 
     # def create(self, validated_data):
     #     tracks_data = validated_data.pop('tracks')

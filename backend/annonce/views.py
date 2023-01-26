@@ -9,13 +9,21 @@ from annonce import serializers
 from .utils import updateAnnonce, getAnnonceDetail, deleteAnnonce, getAnnoncesList, createAnnonce , getAnnounceByName
 from django.shortcuts import get_object_or_404
 from rest_framework import filters , generics
+from rest_framework.viewsets import ModelViewSet, GenericViewSet
+from rest_framework.parsers import MultiPartParser, FormParser
+from django_filters.rest_framework import DjangoFilterBackend
+
+from rest_framework.filters import SearchFilter, OrderingFilter
+from rest_framework.pagination import PageNumberPagination
+
+
 # from django_filters.rest_framework import DjangoFilterBackend
 
 
 # Create your views here.
 
 
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 def getRoutes(request):
 
     routes = [
@@ -81,7 +89,7 @@ def getAnnonce(request, pk):
     if request.method == 'DELETE':
         return deleteAnnonce(request, pk)
 
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 def getAnnounceByNameView(request, name):
 
     return getAnnounceByName(request, name)
@@ -95,6 +103,20 @@ class AnnonceSearch(generics.ListAPIView):
     # DjangoFilterBackend
     search_fields = ['^title' ]
     filterset_fields = ["body", "created"]
+
+class AnnonceViewSet(ModelViewSet):
+    queryset = Annonce.objects.all()
+    serializer_class = AnnonceSerializer
+    
+    parser_classes = (MultiPartParser, FormParser)
+    
+    
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    search_fields = ['title', ]
+    filterset_fields = ["body", "created"]
+
+    # ordering_fields = ['old_price']
+    pagination_class = PageNumberPagination
 
 class Favorites(generics.ListAPIView):
     # permission_classes = [AllowAny]
