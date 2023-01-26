@@ -3,8 +3,8 @@ from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.serializers import Serializer
-from .models import Annonce
-from .serializers import AnnonceSerializer
+from .models import Annonce , Fav , Photo
+from .serializers import AnnonceSerializer , FavSerializer , PhotoSerializer
 from annonce import serializers
 from .utils import updateAnnonce, getAnnonceDetail, deleteAnnonce, getAnnoncesList, createAnnonce , getAnnounceByName
 from django.shortcuts import get_object_or_404
@@ -95,6 +95,24 @@ class AnnonceSearch(generics.ListAPIView):
     # DjangoFilterBackend
     search_fields = ['^title' ]
     filterset_fields = ["body", "created"]
+
+class Favorites(generics.ListAPIView):
+    # permission_classes = [AllowAny]
+    serializer_class = FavSerializer
+
+    def get_queryset(self):
+        return Fav.objects.filter(liker__fname ="dante" )   
+
+    # DjangoFilterBackend
+
+class WithImages(generics.ListAPIView):
+    # permission_classes = [AllowAny]
+
+    serializer_class = PhotoSerializer
+    def get_queryset(self):
+        return Photo.objects.all()
+    
+
 
 # http://127.0.0.1:8000/api/annonces/custom/?search=second&body=testing+df
 # http://127.0.0.1:8000/api/annonces/custom/?search=second&created=2022-12-13T22:24:26.615288Z
