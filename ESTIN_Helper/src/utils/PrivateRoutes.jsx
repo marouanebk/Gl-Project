@@ -9,5 +9,14 @@ const PrivateRoutes = () => {
         user ? <Navigate to="/Home" /> : <Outlet/> 
     )
 }
+export const PrivateRoute = () => {
+    console.log('Private route works')
+    let {user} = useContext(AuthContext)
+    return(
+        user ? <Outlet/> : <Navigate to="/Sign-up"/> 
+    )
+}
 
-export default PrivateRoutes
+
+
+export default PrivateRoutes; 

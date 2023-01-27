@@ -3,8 +3,11 @@ import "../index.css"
 import React, {useState} from "react";
 import styles from "../style.js";
 import UserInformationCard from "./UserInformationCard.jsx";
+import { useContext } from "react";
+import AuthContext from "../context/AuthContext.jsx";
 
 function ProfileCard () {
+    let {user} = useContext(AuthContext)
     const [showUserInformationCard, setShowUserInformationCard] = useState(false);
     const handleOnClose = ()=>setShowUserInformationCard(false)
     return(
@@ -15,9 +18,13 @@ function ProfileCard () {
                       <img className="w-full" src={school} alt="" />
                       <img className="w-24 rounded-full absolute -bottom-12" src={people} alt="" />
                   </div>
+                  
                   <div className="flex flex-col items-center mt-8 gap-3 ">
                       <br/>
-                        <span>Djemaa Abdelmalek</span>
+                      {user && 
+                      
+                       <span>{user.username}</span>
+                      }
                       <br/>
                   </div>
                 <div className="flex justify-start items-center relative mb-6">

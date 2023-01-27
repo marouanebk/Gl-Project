@@ -8,8 +8,7 @@ import { socialMedia } from "../constants/index.js";
 import {add} from "../assets/index.js";
 
 
-function Home() {  
-
+function Home() {
     const [showFilterCard, setShowFilterCard] = useState(false);
 
 
