@@ -2,12 +2,27 @@ import { createContext, useState, useEffect } from 'react'
 import { Outlet } from 'react-router'
 import jwt_decode from 'jwt-decode'
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios'
 
 
 const AuthContext = createContext()
 
 
 export default AuthContext;
+
+
+export const register = (username,email, password, password2, Nationality, phone) => {
+
+    const config = {
+        headers : {
+            'Content-Type' : 'application/json',
+        }
+    };
+
+    const body = JSON.stringify({username,email, password, password2, Nationality, phone})
+
+    axios.post('http://127.0.0.1:8000/authApi/register/',body,config)
+}    
 
 
 export const AuthProvider = () => {
@@ -20,6 +35,20 @@ export const AuthProvider = () => {
     
     const history = useNavigate()
 
+    // let register = async ()=> {
+    //     fetch('http://127.0.0.1:8000/authApi/register/',{
+    //         method : 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json'
+    //         },
+    //         body: JSON.stringify(user)
+    //     },
+    //     )
+    // }
+
+    
+
+
     let loginUser = async (e )  => {
         e.preventDefault()
         console.log('Form submitted')
@@ -31,7 +60,7 @@ export const AuthProvider = () => {
             body:JSON.stringify({'email':e.target.email.value, 'password':e.target.password.value})
         })
         let data = await response.json()
-        console.log('data',data)
+        console.log('data',jwt_decode(data.access))
         if (response.status == 200) {
             setAuthtokens(data)
             setUser(jwt_decode(data.access)) 
@@ -73,6 +102,7 @@ export const AuthProvider = () => {
         user:user,
         loginUser:loginUser,
         logoutUser:logoutUser,
+        register:register,
     } 
     useEffect(
         ()=>{
