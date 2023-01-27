@@ -5,9 +5,18 @@ import styles from "../style.js";
 import UserInformationCard from "./UserInformationCard.jsx";
 import { useContext } from "react";
 import AuthContext from "../context/AuthContext.jsx";
+import { useNavigate } from "react-router";
 
 function ProfileCard () {
+    const navigate = useNavigate()
+    const handleSubmit = event => {
+        event.preventDefault();
+    
+        // 👇️ redirect to /contacts
+        navigate('/Sign-in');
+      };
     let {user} = useContext(AuthContext)
+    let {logoutUser} = useContext(AuthContext)
     const [showUserInformationCard, setShowUserInformationCard] = useState(false);
     const handleOnClose = ()=>setShowUserInformationCard(false)
     return(
@@ -42,6 +51,12 @@ function ProfileCard () {
                 <button style={{ cursor:"pointer" }} className={`${styles.paragraph} mt-4 text-[20px]  pt-3 pb-3 pl-7 pr-7 mb-8 cursor-pointer items-start bg-blue-gradient rounded-[30px]`} onClick={()=>setShowUserInformationCard(true)}>
                     Profile
                 </button>
+                <br />
+                
+                    <button onClick={logoutUser} style={{ cursor:"pointer" }} className={`${styles.paragraph} mt-4 text-[20px]  pt-3 pb-3 pl-7 pr-7 mb-8 cursor-pointer items-start bg-blue-gradient rounded-[30px]`} >
+                        logout
+                    </button>
+            
                 <UserInformationCard onClose={handleOnClose} visible={showUserInformationCard}/>
             </center>
         </div>
