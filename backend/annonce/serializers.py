@@ -35,7 +35,7 @@ class AnnonceSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         uploaded_data = validated_data.pop('uploaded_images')
-        new_product = Annonce.objects.create(user = self.request.user,**validated_data)
+        new_product = Annonce.objects.create(**validated_data)
         for uploaded_item in uploaded_data:
             new_product_image = Photo.objects.create(owner = new_product, image = uploaded_item)
         return new_product

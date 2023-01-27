@@ -32,9 +32,8 @@ function ProfileCard () {
                       <br/>
                       {user && 
                       
-                       <span>{user.username}</span>
-                      }
-                      <br/>
+                      <span>{user.username}</span>
+                     }                      <br/>
                   </div>
                 <div className="flex justify-start items-center relative mb-6">
                     <img src={email} className="absolute ml-4 w-7" alt="Location icon"/>
