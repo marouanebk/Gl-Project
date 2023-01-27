@@ -3,23 +3,27 @@ import { Outlet } from 'react-router'
 import jwt_decode from 'jwt-decode'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
+import { Navigate } from 'react-router-dom';
 
 const AuthContext = createContext()
 
 
 export default AuthContext;
-
-export const register = (username,email, password, password2, Nationality, phone) => {
-
+export const register = (username,email, password, password2, Nationality, phone, age) => {
+    
     const config = {
         headers : {
             'Content-Type' : 'application/json',
         }
     };
 
-    const body = JSON.stringify({username,email, password, password2, Nationality, phone})
+    const body = JSON.stringify({username,email, password, password2, Nationality, phone, age})
 
     axios.post('http://127.0.0.1:8000/authApi/register/',body,config)
+    return(
+        <Navigate to="/Home"/> 
+    )
+    
 }
 
 export const AuthProvider = () => {

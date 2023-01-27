@@ -13,7 +13,7 @@ export const PrivateRoute = () => {
     console.log('Private route works')
     let {user} = useContext(AuthContext)
     return(
-        user ? <Outlet/> : <Navigate to="/Sign-up"/> 
+        user ? <Outlet/> : <Navigate to="/Sign-in"/> 
     )
 }
 

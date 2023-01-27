@@ -32,6 +32,7 @@ function Navbar2() {
                             onClick={() => window.open(social.link)}
                         />
                     ))}
+                    
                 </ul>
                 <div className="lg:hidden flex flex-1 justify-end items-center z-50 ">
                     <img
