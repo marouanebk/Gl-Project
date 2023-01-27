@@ -4,7 +4,7 @@ import { AddCard, AnnouncementCard, FavoriteCard, Navbar2, ProfileCard } from ".
 import { close, facebook, menu } from "../assets";
 import { socialMedia } from "../constants/index.js";
 
-function Home() {
+function Home() {  
     const [showAddCard, setShowAddCard] = useState(false);
     const handleOnClose = () => setShowAddCard(false)
     const [toggle, setToggle] = useState(false);
