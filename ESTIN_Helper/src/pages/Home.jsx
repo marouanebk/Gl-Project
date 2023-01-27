@@ -28,21 +28,15 @@ function Home() {
         const records = await response.json();
 
         setRecords(records);
-        console.log(records);
     }
 
     const searchHandler = async (event) => {
         let key = event.target.value;
 
         if (key) {
-            console.log("here in key ");
             let results = await fetch(`http://127.0.0.1:8000/api/products/?search=${key}`);
-            console.log(results);
             results = await results.json();
             if (results) {
-                console.log("here in results");
-                console.warn(results);
-
                 setRecords(results);
             }
         }

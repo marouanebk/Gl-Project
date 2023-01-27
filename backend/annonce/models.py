@@ -1,9 +1,11 @@
 from django.db import models
+from base.models import User
 
 # Create your models here.
 
 
 class Annonce(models.Model):
+    author = models.ForeignKey("base.User", related_name=("author"), on_delete=models.CASCADE)
     title = models.CharField(max_length=20,blank=True)
     description = models.TextField(null=False, blank=False)
     category = models.TextField(null=False, blank=False)
