@@ -18,12 +18,13 @@ function ProfileCard () {
                       <img className="w-full" src={school} alt="" />
                       <img className="w-24 rounded-full absolute -bottom-12" src={people} alt="" />
                   </div>
+                  
                   <div className="flex flex-col items-center mt-8 gap-3 ">
                       <br/>
-                        {/* <span>Djemaa Abdelmalek</span> */}
-                        <span>Djemaa Abdelmalek</span>
-
-                      <br/>
+                      {user && 
+                      
+                      <span>{user.username}</span>
+                     }                      <br/>
                   </div>
                 <div className="flex justify-start items-center relative mb-6">
                     <img src={email} className="absolute ml-4 w-7" alt="Location icon"/>

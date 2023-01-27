@@ -6,6 +6,7 @@ import SignUp from "./pages/SignUp.jsx"
 import ForgotPassword from "./pages/ForgotPassword.jsx"
 import Home from "./pages/Home.jsx"
 import PrivateRoutes from './utils/PrivateRoutes'
+import { PrivateRoute } from './utils/PrivateRoutes'
 import { AuthProvider } from './context/AuthContext'
 
 function App() {
@@ -15,10 +16,12 @@ function App() {
                 <Route element={<PrivateRoutes/>}>
                     <Route path="/Sign-in" element={<SignIn />} />
                     <Route path="/Sign-up" element={<SignUp />} />
+                    <Route path="/" element={<Splash />} />
                 </Route>
-                <Route path="/Home" element={<Home />} />
+                <Route element={<PrivateRoute/>}>
+                    <Route path="/Home" element={<Home />} />
+                </Route>     
             </Route>
-            <Route path="/" element={<Splash />} />
             <Route path="/Forgot-password" element={<ForgotPassword />} />
         </Routes>
     );
