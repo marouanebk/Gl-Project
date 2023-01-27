@@ -1,12 +1,21 @@
 from django.db import models
+from base.models import User
 
 # Create your models here.
 
 
 class Annonce(models.Model):
+    author = models.ForeignKey("base.User", related_name=("author"), on_delete=models.CASCADE)
     title = models.CharField(max_length=20,blank=True)
-    body = models.TextField(null=True, blank=True)
-    updated = models.DateTimeField(auto_now=True)
+    description = models.TextField(null=False, blank=False)
+    category = models.TextField(null=False, blank=False)
+    theme = models.TextField(null=False, blank=False)
+    modality = models.TextField(null=False, blank=False)
+    sold = models.IntegerField(null=False, blank=False)
+    wilaya = models.TextField(null=False, blank=False)
+    commune = models.TextField(null=False, blank=False)
+
+
     created = models.DateTimeField(auto_now_add=True)
     # adr = models.ForeignKey("Adress", verbose_name=("Adress"), on_delete=models.CASCADE , null = True )
 

@@ -31,11 +31,11 @@ class AnnonceSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Annonce
-        fields = ('id','title','body' ,'created' ,'images' , 'uploaded_images')
+        fields = ('id','author','title','description' ,'category', 'theme','modality','sold','wilaya', 'commune','images' , 'uploaded_images')
 
     def create(self, validated_data):
         uploaded_data = validated_data.pop('uploaded_images')
-        new_product = Annonce.objects.create(**validated_data)
+        new_product = Annonce.objects.create(user = self.request.user,**validated_data)
         for uploaded_item in uploaded_data:
             new_product_image = Photo.objects.create(owner = new_product, image = uploaded_item)
         return new_product

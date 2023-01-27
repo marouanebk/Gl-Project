@@ -9,7 +9,7 @@ from rest_framework import filters
 
 
 def getAnnoncesList(request):
-    notes = Annonce.objects.all().order_by('-updated')
+    notes = Annonce.objects.all().order_by('-created')
     # notes = Annonce.objects.prefetch_related('tracks')
 
     # images = Photo.objects.all()
