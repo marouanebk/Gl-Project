@@ -14,6 +14,12 @@ import school from "./school.png"
 import notlike from "./notlike.png"
 import comment from "./comment.png"
 import share from "./share.png"
+import add from "./add.png"
+import search from "./search.png"
+import filter from "./filter.png"
+import localisation from "./localisation.png"
+import work from "./work.png"
+import email from "./email.png"
 
 export {
     bill,
@@ -32,4 +38,10 @@ export {
     notlike,
     comment,
     share,
+    add,
+    search,
+    filter,
+    localisation,
+    work,
+    email,
 };

@@ -6,6 +6,6 @@ class User(AbstractUser):
     Nationality = models.CharField(null=True, blank=True, max_length=30)
     email = models.EmailField(max_length=240, unique=True)
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['username']
     def __str__(self):
         return self.username
