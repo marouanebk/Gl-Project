@@ -102,7 +102,7 @@ class AnnonceSearch(generics.ListAPIView):
     filter_backends = [filters.SearchFilter]
     # DjangoFilterBackend
     search_fields = ['^title' ]
-    filterset_fields = ["body", "created"]
+    filterset_fields = ["description", "created"]
 
 class AnnonceViewSet(ModelViewSet):
     queryset = Annonce.objects.all()
@@ -113,7 +113,7 @@ class AnnonceViewSet(ModelViewSet):
     
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     search_fields = ['title', ]
-    filterset_fields = ["body", "created"]
+    filterset_fields = ["description", "created"]
 
     # ordering_fields = ['old_price']
     pagination_class = PageNumberPagination
