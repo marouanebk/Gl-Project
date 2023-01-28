@@ -2,7 +2,7 @@ import "../index.css"
 import React, { useState, useEffect, useCallback } from 'react'
 import { algeria_cities } from "../constants";
 import styles from "../style.js";
-import axios from 'Axios'
+import axios from 'redaxios';
 import { useContext } from "react";
 import AuthContext from "../context/AuthContext.jsx";
 
@@ -56,6 +56,9 @@ function AddCard({ visible, onClose }) {
             uploaded_images: state.uploaded_images,
         };
         var formData = new FormData();
+        formData.append('author', user.user_id);
+        formData.append('created_by', user.user_id);
+
         formData.append('title', state.title);
         formData.append('description', state.description);
         formData.append('category', state.category);
@@ -64,14 +67,13 @@ function AddCard({ visible, onClose }) {
         formData.append('sold', state.sold);
         formData.append('commune', state.commune);
         formData.append('wilaya', state.wilaya);
-        // formData.append('author', user);
         // formData.append('uploaded_images', selectedFiles);
         Array.from(selectedFiles).forEach((file) => {
             formData.append("uploaded_images", file);
         });
-        console.log(selectedFiles);
-
-        console.log(formData);
+        console.log("userid"+user.user_id);
+        console.log(user);
+        // console.log(selectedFiles);
 
         // await fetch(`http://127.0.0.1:8000/api/products/`, {
         //     method: "POST",
