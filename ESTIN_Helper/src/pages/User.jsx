@@ -1,17 +1,18 @@
-import React, { useState, useEffect, useCallback } from 'react'
 import styles from "../style.js";
-import { AddCard, AnnouncementCard, FavoriteCard, Navbar2, ProfileCard } from "../components/index.js";
-import FilterCard from "../components/FilterCard.jsx";
+import {
+    AnnouncementCard,
+    ContactCard,
+    FavoriteCard,
+    Navbar2,
+    ProfileInfoCard
+} from "../components/index.js";
+
+import React, { useState, useEffect, useCallback } from 'react'
 import { close, filter, menu, search } from "../assets";
 import { HomeBar } from "../constants/index.js";
+import FilterCard from "../components/FilterCard.jsx";
 
-
-
-import { socialMedia } from "../constants/index.js";
-import { add } from "../assets/index.js";
-
-
-function Home() {
+function User() {
     const [showFilterCard, setShowFilterCard] = useState(false);
 
 
@@ -56,12 +57,10 @@ function Home() {
             getRecords();
         }
     }
-
     return (
         <div className="bg-primary w-full overflow-hidden">
             <div className={`${styles.paddingX} ${styles.flexCenter}`}>
                 <div className={`${styles.boxWidth}`}>
-                    {/* <Navbar2 /> */}
                     <section>
                         <nav className="w-full flex py-0 justify-between items-center navbar">
                             <h1 className="flex-1 font-poppins font-semi-bold ss:text-[20px] text-[20px] text-white ss:leading-[100.8px] leading-[75px]">
@@ -130,26 +129,18 @@ function Home() {
             <div className={`bg-primary`}>
                 <div className="flex justify-between md:flex-row flex-col ">
                     <div className="min-w-[28%]">
-                        <ProfileCard />
+                        <FavoriteCard />
                     </div>
                     <div className="min-w-[43%]">
-                        {records.map((item, index) => (
-
-                            <AnnouncementCard Annonce={item} images={item.images} />
-                        ))}
+                        <ProfileInfoCard />
+                        {/* <AnnouncementCard/> */}
                     </div>
                     <div className="min-w-[28%]">
-                        <FavoriteCard />
+                        <ContactCard />
                     </div>
                 </div>
             </div>
-            <div className="fixed z-40 bottom-0 right-0 mr-12 mb-12 " >
-                <button style={{ cursor: "pointer" }} className={`${styles.paragraph} items-center`} onClick={() => setShowAddCard(true)}>
-                    <img src={add} className="w-16 animate-pulse " alt="Add icon" />
-                </button>
-            </div>
-            <AddCard onClose={handleOnClose} visible={showAddCard} />
         </div>
     )
 }
-export default Home
+export default User

@@ -20,6 +20,18 @@ import filter from "./filter.png"
 import localisation from "./localisation.png"
 import work from "./work.png"
 import email from "./email.png"
+import edit from "./edit.png"
+import details from "./details.png"
+import favorite from "./favorite.png"
+import chat from "./chat.png"
+import home from "./home.png"
+import profile from "./profile.png"
+import logout from "./logout.png"
+import contacts from "./contacts.png"
+import arrow from "./arrow.png"
+import delete_ from "./delete.png"
+import phone from "./phone.png"
+import age from "./age.png"
 
 export {
     bill,
@@ -44,4 +56,16 @@ export {
     localisation,
     work,
     email,
+    edit,
+    details,
+    favorite,
+    chat,
+    home,
+    profile,
+    logout,
+    contacts,
+    arrow,
+    delete_,
+    phone,
+    age,
 };

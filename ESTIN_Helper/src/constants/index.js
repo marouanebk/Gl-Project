@@ -1,4 +1,4 @@
-import {people, facebook, linkedin, twitter, school} from "../assets";
+import {people, facebook, linkedin, twitter, school, chat, home, profile, logout} from "../assets";
 
 export const navLinks = [
   {
@@ -57,6 +57,28 @@ export const socialMedia = [
     id: "social-media-3",
     icon: linkedin,
     link: "https://www.linkedin.com/",
+  },
+];
+export const HomeBar = [
+  {
+    id: "01",
+    icon: home,
+    link: "/Home",
+  },
+  {
+    id: "02",
+    icon: chat,
+    link: "/Chat",
+  },
+  {
+    id: "03",
+    icon: profile,
+    link: "/User",
+  },
+  {
+    id: "04",
+    icon: logout,
+    link: "/Sign-in",
   },
 ];
 export const data = [

@@ -8,7 +8,7 @@ import AuthContext from "../context/AuthContext.jsx";
 
 
 function AddCard({ visible, onClose }) {
-    let {user} = useContext(AuthContext)
+    let { user } = useContext(AuthContext)
 
     const [state, setState] = useState({
         title: '',
@@ -71,7 +71,7 @@ function AddCard({ visible, onClose }) {
         Array.from(selectedFiles).forEach((file) => {
             formData.append("uploaded_images", file);
         });
-        console.log("userid"+user.user_id);
+        console.log("userid" + user.user_id);
         console.log(user);
         // console.log(selectedFiles);
 
@@ -170,9 +170,33 @@ function AddCard({ visible, onClose }) {
                         <label className="text-white text-[14px] p-2 ">Description :</label>
                         <textarea className="h-full w-full border-solid border-2 bg-black-gradient text-white rounded-[15px] p-4 text-[14px]" value={state.description} onChange={(e) => updateForm({ description: e.target.value })} />
                     </div>
-                    <div className="flex flex-col justify-center items-center border-2 border-dashed h-[120px] cursor-pointer rounded-[8px] text-white">
+                    {/* <div className="flex flex-col justify-center items-center border-2 border-dashed h-[120px] cursor-pointer rounded-[8px] text-white">
                         <input type="file" accept="image/*" multiple onChange={handleFileChange} />
+                    </div> */}
+
+
+                    <div className="flex items-center justify-center w-full">
+
+                        <label htmlFor="dropzone-file"
+                            className="flex flex-col items-center justify-center w-full h-[120px] border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                            <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                                <svg aria-hidden="true" className="w-10 h-10 mb-3 text-gray-400" fill="none"
+                                    stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                                </svg>
+                                <p className="mb-2 text-sm text-gray-500 dark:text-gray-400"><span
+                                    className="font-semibold">Click to upload images</span> or drag and drop</p>
+                                <p className="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX.
+                                    800x400px)</p>
+                                <input id="dropzone-file" type="file" className="hidden" accept="image/*" multiple onChange={handleFileChange} />
+                            </div>
+
+                        </label>
                     </div>
+
+
+
                     <center>
                         <button type='submit' style={{ cursor: "pointer" }} className={`${styles.paragraph} mt-4 text-[20px]  pt-3 pb-3 pl-7 pr-7 mb-8 cursor-pointer items-start bg-blue-gradient rounded-[30px]`}>
                             Add
