@@ -101,8 +101,8 @@ class AnnonceSearch(generics.ListAPIView):
     serializer_class = AnnonceSerializer
     filter_backends = [filters.SearchFilter]
     # DjangoFilterBackend
-    search_fields = ['^title' ]
-    filterset_fields = ["description", "created"]
+    search_fields = ['^title' , "^description"]
+    filterset_fields = ["wilaya", "commune"]
 
 class AnnonceViewSet(ModelViewSet):
     queryset = Annonce.objects.all()

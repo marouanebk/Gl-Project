@@ -16,7 +16,7 @@ const SignUpCard = () => {
     const [Nationality,setNationality] = useState()
     const [age,setAge] = useState()
     const [phone,setPhone] = useState()
-    let {authTokens} = useContext(AuthContext)
+    
 
     const handSubmit= (e) =>{
         e.preventDefault()
@@ -26,9 +26,9 @@ const SignUpCard = () => {
             console.log(password)
             console.log(password2)
             username ? console.log(username) : console.log("field name is empty")
-            let body = JSON.stringify({username,email, password, password2, Nationality, phone})
+            let body = JSON.stringify({username,email, password, password2, Nationality, phone, age})
             console.log(body)
-            register(username,email, password, password2, Nationality, phone)
+            register(username,email, password, password2, Nationality, phone, age)
 
         }
     }

@@ -1,9 +1,16 @@
-import React from 'react'
-import { people, twitter } from "../assets/index.js";
+import React, { useState } from 'react'
+import { chat, favorite, people } from "../assets/index.js";
 import { data } from "../constants/index.js";
+import { Link } from "react-router-dom";
+import "mapbox-gl/dist/mapbox-gl.css";
+import Map, { FullscreenControl, Marker, NavigationControl } from "react-map-gl";
 
 
 const AnnouncementCard = ({ Annonce, images }) => {
+    const [lng] = useState(6.642433);
+    const [lat] = useState(36.360155);
+    const [showMore, setShowMore] = useState(false);
+
     const slideLeft = () => {
         let slider = document.getElementById('slider');
         slider.scrollLeft = slider.scrollLeft - 550;
@@ -15,23 +22,65 @@ const AnnouncementCard = ({ Annonce, images }) => {
     };
     return (
         <section>
-            <div className=" min-w-full flex flex-col mb-4 p-4 rounded-[16px] gap-4 bg-black-gradient font-poppins text-white font-medium">
-                <div className="sm:flex justify-start items-center">
+            <div className="bg-black-gradient rounded-2xl flex flex-col relative gap-4 m-2 p-6 overflow-x-clip font-poppins text-white font-medium">
+                <div className="sm:flex justify-between items-center">
                     <img className="w-8 rounded-full absolute " src={people} alt="" />
                     <span className="pl-10 text-[16px]">abdelmalek djemaa</span>
+                    <div className="flex items-start gap-6 ml-7">
+                        <Link className="cursor-pointer" to={'/Sign-in'}>
+                            <img src={chat} className="w-6" alt="chat icon" />
+                        </Link>
+                        <Link className="cursor-pointer" to={'/Sign-in'}>
+                            <img src={favorite} className="w-6" alt="favorite icon" />
+                        </Link>
+                    </div>
                 </div>
-                <div className="ml-7">
-                    <span>title : {Annonce.title}</span>
-                    <br />
-                    <span>Description :{Annonce.description}</span>                    <br />
-                    <span>category :{Annonce.category}</span>                    <br />
-                    <span>theme :{Annonce.theme}</span>                    <br />
-                    <span>modality :
-                        {Annonce.modality}</span><br />
-                    <span>sold :{Annonce.sold}</span><br />
-                    <span>wilaya :{Annonce.wilaya}</span><br />
-                    <span>commune :{Annonce.commune}</span>
+                <div className="mx-6 m-2">
+                    {showMore ? <div className="justify-center">
+                        <div >
+                            <span className='text-gradient'>title : {Annonce.title}</span>
+                            <br />
+                            <span className='text-gradient'>Description :{Annonce.description}</span>                    <br />
+                            <span className='text-gradient'>category :{Annonce.category}</span>                    <br />
+                            <span className='text-gradient'>theme :{Annonce.theme}</span>                    <br />
+                            <span className='text-gradient'>modality :
+                                {Annonce.modality}</span><br />
+                            <span className='text-gradient'>sold :{Annonce.sold}</span><br />
+                            <span className='text-gradient'>wilaya :{Annonce.wilaya}</span><br />
+                            <span className='text-gradient'>commune :{Annonce.commune}</span>
 
+                        </div>
+                        <Map
+                            mapboxAccessToken="pk.eyJ1IjoibWFsZWs1IiwiYSI6ImNsZGY3cmk1dzAycTE0MG1paG9yYXBvNjMifQ.pyx1m6eB3ui9Oc2V09pfJA"
+                            style={{
+                                width: "full",
+                                height: "150px",
+                                borderRadius: "15px",
+                                border: "2px solid black",
+                            }}
+                            initialViewState={{
+                                longitude: lng,
+                                latitude: lat,
+                                zoom: 11,
+                            }}
+                            mapStyle="mapbox://styles/mapbox/streets-v9"
+                        >
+                            <Marker longitude={lng} latitude={lat} />
+                            <NavigationControl position="bottom-right" />
+                            <FullscreenControl />
+                        </Map>
+                    </div> :
+                        <div >
+                            <span>title : {Annonce.title}</span>
+                            <br />
+                            <span>Description :{Annonce.description}</span>
+
+
+                        </div>
+                    }
+                    <button className="flex justify-start text-gradient hover:text-[17px] duration-150" onClick={() => setShowMore(!showMore)}>
+                        {showMore ? "Show less " : "Show More ..."}
+                    </button>
                 </div>
                 <div className='relative flex items-center'>
                     <button className='opacity-50 cursor-pointer hover:opacity-100 text-3xl' onClick={slideLeft}>
@@ -53,15 +102,25 @@ const AnnouncementCard = ({ Annonce, images }) => {
                         {'>'}
                     </button>
                 </div>
-                <div className="flex items-start gap-6 ml-7">
-                    <img className="cursor-pointer" src={twitter} alt="" />
-                    <img className="cursor-pointer" src={twitter} alt="" />
-                    <img className="cursor-pointer" src={twitter} alt="" />
-                </div>
             </div>
         </section>
-
     )
 }
 
 export default AnnouncementCard;
+
+
+
+{/* <div className="ml-7">
+    <span>title : {Annonce.title}</span>
+    <br />
+    <span>Description :{Annonce.description}</span>                    <br />
+    <span>category :{Annonce.category}</span>                    <br />
+    <span>theme :{Annonce.theme}</span>                    <br />
+    <span>modality :
+        {Annonce.modality}</span><br />
+    <span>sold :{Annonce.sold}</span><br />
+    <span>wilaya :{Annonce.wilaya}</span><br />
+    <span>commune :{Annonce.commune}</span>
+
+</div> */}

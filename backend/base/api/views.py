@@ -7,8 +7,6 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from base.models import User
 from .serializers import userSerializer,registrationSerializer
 
-
-
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
@@ -38,7 +36,7 @@ def getRoutes(request):
 def getUsers(request):
     users = User.objects.all()
     serializer = userSerializer(users, many = True)
-    return Response(serializer.data)
+    return Response(serializer.data)    
 
 @api_view(['POST'])
 def registrationView(request):
