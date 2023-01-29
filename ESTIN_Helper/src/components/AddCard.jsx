@@ -13,9 +13,9 @@ function AddCard({ visible, onClose }) {
     const [state, setState] = useState({
         title: '',
         description: '',
-        category: '',
-        theme: '',
-        modality: '',
+        category: 'PrimarySchool',
+        theme: 'Mathematics',
+        modality: 'Online',
         sold: 0,
         commune: '',
         wilaya: '',

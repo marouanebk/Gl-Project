@@ -1,7 +1,7 @@
 from rest_framework import generics
 from rest_framework.response import Response
-from .models import Annonce , Photo
-from .serializers import AnnonceSerializer
+from .models import Annonce , Photo , Fav
+from .serializers import AnnonceSerializer , FavSerializer
 from django.shortcuts import get_object_or_404
 from rest_framework import filters
 
@@ -15,6 +15,22 @@ def getAnnoncesList(request):
     # images = Photo.objects.all()
     serializer = AnnonceSerializer(notes, many=True)
     return Response(serializer.data)
+
+def getFavorites(request):
+    favorites = Fav.objects.all()
+    # notes = Annonce.objects.prefetch_related('tracks')
+
+    # images = Photo.objects.all()
+    serializer = FavSerializer(favorites, many=True)
+    return Response(serializer.data)
+
+def createFavorites(request):
+    data = request.data
+    fav = Fav.objects.create(user = data['user'],annonce = data['user'])
+    serializer = FavSerializer(fav, many=False)
+    return Response(serializer.data)
+
+
 
 
 def getAnnonceDetail(request, pk):

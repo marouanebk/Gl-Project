@@ -22,6 +22,9 @@ function Home() {
     const [toggle, setToggle] = useState(false);
 
     const [records, setRecords] = useState([]);
+    const handleChange = (newRecords) => {
+        setRecords(newRecords);
+    }
 
     useEffect(() => {
         getRecords();
@@ -46,7 +49,7 @@ function Home() {
         let key = event.target.value;
 
         if (key) {
-            let results = await fetch(`http://127.0.0.1:8000/api/annonces/custom/?search=second&body=testing+df`);
+            let results = await fetch('http://127.0.0.1:8000/api/annonces/custom/?search=' + key);
             results = await results.json();
             if (results) {
                 setRecords(results);
@@ -73,7 +76,7 @@ function Home() {
                                 <button style={{ cursor: "pointer" }} className={``} onClick={() => setShowFilterCard(true)}>
                                     <img src={filter} className="flex ml-4 w-8" alt="Filter" />
                                 </button>
-                                <FilterCard onClose={handleOnClose2} visible={showFilterCard} />
+                                <FilterCard records={records} handleChange={handleChange} onClose={handleOnClose2} visible={showFilterCard} />
                             </div>
                             <ul className="list-none lg:flex hidden justify-end items-center flex-1">
                                 {HomeBar.map((social, index) => (

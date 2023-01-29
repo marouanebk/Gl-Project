@@ -4,32 +4,40 @@ import styles from "../style.js";
 import React, { useState, useEffect, useCallback } from 'react'
 
 
-function FilterCard({ visible, onClose }) {
+function FilterCard({ records, handleChange, visible, onClose }) {
     const [wilaya, setwilaya] = useState('');
     const [commune, setcommune] = useState('');
     const [start, setstart] = useState('');
     const [end, setend] = useState('');
     const filterHandler = async (event) => {
-        let key = event.target.value;
-
+        event.preventDefault();
         console.log("in filter");
 
-        if (key) {
-            let keyword = "";
-            if (wilaya != "") keyword = keyword + 'wilaya=' + wilaya;
-            if (commune != "") keyword = keyword + 'commune=' + commune;
-            if (start != "") keyword = keyword + 'created=' + start;
-            if (end != "") keyword = keyword + 'created=' + end;
-            // http://127.0.0.1:8000/api/annonces/custom/?search=second&created__get2022-12-13T00:00:00.000000Z
-            let results = await fetch(`http://127.0.0.1:8000/api/products/?search=${key}`);
-            results = await results.json();
-            if (results) {
-                setRecords(results);
-            }
+        let keyword = "?";
+        if (wilaya != "") { keyword = keyword + 'wilaya=' + wilaya; }
+        if (commune != "") {
+            if (keyword != "?") keyword = keyword + "&";
+            keyword = keyword + 'commune=' + commune;
         }
-        else {
-            getRecords();
+        if (start != "") {
+            if (keyword != "?") keyword = keyword + "&";
+            keyword = keyword + 'created__get' + start + "T00:00:00.000000Z"
+        };
+        if (end != "") {
+            if (keyword != "?") keyword = keyword + "&";
+            keyword = keyword + 'created__lte' + end + "T00:00:00.000000Z"
+        };
+        console.log(keyword);
+        keyword = keyword.replace(/ /g, "+");
+
+
+        // http://127.0.0.1:8000/api/annonces/custom/created__get2022-12-13T00:00:00.000000Z
+        let results = await fetch(`http://127.0.0.1:8000/api/annonces/custom/${keyword}`);
+        results = await results.json();
+        if (results) {
+            handleChange(results);
         }
+
     }
     // const [records, setRecords] = useState([]);
 
@@ -90,12 +98,12 @@ function FilterCard({ visible, onClose }) {
                         </div>
                         <div className="flex flex-row justify-between">
                             <div className="flex justify-start items-center mb-8 m-0">
-                                <label className="text-white p-2 text-[14px]">Commune:</label>
-                                <input type="date" className="h-12 w-full border-solid border-2 bg-black-gradient text-white rounded-[50px] p-2 text-[14px]" />
+                                <label className="text-white p-2 text-[14px]">start:</label>
+                                <input type="date" className="h-12 w-full border-solid border-2 bg-black-gradient text-white rounded-[50px] p-2 text-[14px]" value={start} onChange={(e) => setstart(e.target.value)} />
                             </div>
                             <div className="flex justify-start items-center mb-8 m-0">
-                                <label className="text-white p-2 text-[14px]">Commune:</label>
-                                <input type="date"  className="h-12 w-full color-white border-solid border-2 bg-black-gradient text-white rounded-[50px] p-2 text-[14px]" />
+                                <label className="text-white p-2 text-[14px]">end:</label>
+                                <input type="date" className="h-12 w-full color-white border-solid border-2 bg-black-gradient text-white rounded-[50px] p-2 text-[14px]" value={end} onChange={(e) => setend(e.target.value)} />
                             </div>
                         </div>
                     </div>

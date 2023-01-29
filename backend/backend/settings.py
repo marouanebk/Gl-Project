@@ -1,8 +1,26 @@
 
 from pathlib import Path
 from datetime import timedelta
+import os
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+# from firebase_storage import FirebaseStorage
+
+
+# import firebase_admin
+# from firebase_admin import credentials
+
+# cred = credentials.Certificate("./glproject-16da9-firebase-adminsdk-bmd80-727353ca8b.json")
+# firebase_admin.initialize_app(cred)
+
+# DEFAULT_FILE_STORAGE = 'firebase_storage.FirebaseStorage'
+
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'mediafiles')
+
+# URL used to access the media
+MEDIA_URL = '/media/'
 
 
 # Quick-start development settings - unsuitable for production
@@ -29,6 +47,7 @@ INSTALLED_APPS = [
     'base.apps.BaseConfig',
     'rest_framework',
     "corsheaders",
+    "django_filters",
     'rest_framework_simplejwt.token_blacklist',
     'annonce'
 
@@ -40,6 +59,8 @@ REST_FRAMEWORK = {
     
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+
     # 'DEFAULT_RENDERER_CLASSES': [
     #     'rest_framework.renderers.JSONRenderer',
     #     'rest_framework.renderers.TemplateHTMLRenderer',
@@ -103,7 +124,7 @@ CORS_ALLOW_CREDENTIALS = True
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
         'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -160,6 +181,8 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
+
+
 
 
 # Static files (CSS, JavaScript, Images)

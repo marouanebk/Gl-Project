@@ -90,10 +90,10 @@ const AnnouncementCard = ({ Annonce, images }) => {
                         id='slider'
                         className='w-full h-full rounded-[16px] overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide'
                     >
-                        {data.map((item) => (
+                        {images.map((item) => (
                             <img
                                 className='rounded-[16px] w-full  h-full inline-block pr-2 pl-2 cursor-pointer'
-                                src={item.img}
+                                src={item.image}
                                 alt='/'
                             />
                         ))}

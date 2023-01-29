@@ -7,6 +7,7 @@ from rest_framework_nested import routers
 router = routers.DefaultRouter()
 
 router.register("products", views.AnnonceViewSet )
+# router.register("products", views.AnnonceViewSet )
 
 
 
@@ -21,7 +22,10 @@ urlpatterns = [
     # get by id 
     # path('annonces/search/keyword=<str:name>/', views.getAnnounceByName, name="annonces"),
     path('annonces/custom/', views.AnnonceSearch.as_view(), name="search"),
-    path('favorites/', views.Favorites.as_view(), name="favorites"),
+    path('favorites/', views.getFavorites, name="favorites"),
+
+    # path("favorites", include(router.urls) , name = "favorites" ),
+
     path('all/', views.WithImages.as_view(), name="WithImages"),
 
     
