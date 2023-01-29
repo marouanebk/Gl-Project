@@ -22,7 +22,12 @@ urlpatterns = [
     # get by id 
     # path('annonces/search/keyword=<str:name>/', views.getAnnounceByName, name="annonces"),
     path('annonces/custom/', views.AnnonceSearch.as_view(), name="search"),
-    path('favorites/', views.getFavorites, name="favorites"),
+    path('favorites/<int:user_id>/', views.getFavorites, name="favorites_get"),
+    path('favorites/', views.createFavoriteRequest, name="favorites"),
+    path('user/<int:user_id>/', views.getUserAnnonces, name="user_annonces"),
+
+
+
 
     # path("favorites", include(router.urls) , name = "favorites" ),
 

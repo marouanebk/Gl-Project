@@ -17,6 +17,8 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.pagination import PageNumberPagination
+from base.models import User
+
 
 
 # from django_filters.rest_framework import DjangoFilterBackend
@@ -67,7 +69,7 @@ def getRoutes(request):
             'description': 'Deletes and exiting Annonce'
         },
         {
-            'Endpoint': '/favorites/',
+            'Endpoint': '/favorites/id/',
             'method': 'GET',
             'body': None,
             'description': 'Returns an array of annonces'
@@ -89,6 +91,35 @@ def getAnnonces(request):
 
     if request.method == 'POST':
         return createAnnonce(request)
+    
+@api_view(['POST', 'GET'])
+def createFavoriteRequest(request):
+    if request.method == 'POST':
+        return createFavorites(request)
+    
+# @api_view(['GET'])
+# def getFavoritesRequest(request):
+#     if request.method == 'GET':
+#         return getFavorites(request)
+@api_view(['POST', 'GET'])
+def getFavorites(request , user_id):
+
+    favorites = Fav.objects.filter(user = user_id)
+    serializer = FavSerializer(favorites, many=True)
+    fav_data = serializer.data
+    for fav in fav_data:
+        annonce = Annonce.objects.get(id=fav['annonce'])
+        fav['annonce'] = AnnonceSerializer(annonce).data
+
+    return Response(fav_data , content_type='application/json' )
+
+@api_view(['POST', 'GET'])
+def getUserAnnonces(request , user_id):
+    annonces = Annonce.objects.filter(author = user_id)
+    serializer = AnnonceSerializer(annonces, many=True)
+    return Response(serializer.data , content_type='application/json' )
+
+
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
@@ -146,14 +177,7 @@ class Favorites(ModelViewSet):
 
     # DjangoFilterBackend
 
-@api_view(['GET', 'POST'])
-def getFavorites(request):
 
-    if request.method == 'GET':
-        return getFavorites(request)
-
-    if request.method == 'POST':
-        return createFavorites(request)
 
 class WithImages(generics.ListAPIView):
     # permission_classes = [AllowAny]

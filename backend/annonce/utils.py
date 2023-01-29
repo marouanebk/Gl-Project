@@ -4,6 +4,7 @@ from .models import Annonce , Photo , Fav
 from .serializers import AnnonceSerializer , FavSerializer
 from django.shortcuts import get_object_or_404
 from rest_framework import filters
+from base.models import User
 
 
 
@@ -16,17 +17,24 @@ def getAnnoncesList(request):
     serializer = AnnonceSerializer(notes, many=True)
     return Response(serializer.data)
 
-def getFavorites(request):
-    favorites = Fav.objects.all()
-    # notes = Annonce.objects.prefetch_related('tracks')
+def getFavorites(request , user_id):
+    print("heere")
+    user = get_object_or_404(User, pk=user_id)
 
-    # images = Photo.objects.all()
+    favorites = Fav.objects.all(user = user)
     serializer = FavSerializer(favorites, many=True)
-    return Response(serializer.data)
+    fav_data = serializer.data
+    for fav in fav_data:
+        annonce = Annonce.objects.get(id=fav['annonce'])
+        fav['annonce'] = AnnonceSerializer(annonce).data
+
+    return Response(fav_data)
 
 def createFavorites(request):
     data = request.data
-    fav = Fav.objects.create(user = data['user'],annonce = data['user'])
+    user = User.objects.get(id=data['user'])
+    annonce = Annonce.objects.get(id=data['annonce'])
+    fav = Fav.objects.create(user = user,annonce = annonce)
     serializer = FavSerializer(fav, many=False)
     return Response(serializer.data)
 

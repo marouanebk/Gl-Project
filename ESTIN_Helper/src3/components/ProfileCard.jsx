@@ -1,0 +1,52 @@
+import {details, edit, email, localisation, people, school, work} from "../assets/index.js";
+import "../index.css"
+import React, {useState} from "react";
+import UserInformationCard from "./UserInformationCard.jsx";
+import {Link} from "react-router-dom";
+
+function ProfileCard () {
+    const [showUserInformationCard, setShowUserInformationCard] = useState(false);
+    const handleOnClose = ()=>setShowUserInformationCard(false)
+    return(
+    <center>
+        <div className="bg-black-gradient h-[95%] rounded-3xl flex flex-col relative gap-4 m-4 overflow-x-clip font-poppins text-white font-medium z-40">
+            <center>
+                  <div className="relative flex flex-col items-center justify-center">
+                      <img className="w-full" src={school} alt="" />
+                      <img className="w-24 rounded-full absolute -bottom-12" src={people} alt="" />
+                  </div>
+                  <div className="flex flex-col items-center mt-8 gap-3 ">
+                      <br/>
+                        <span>Djemaa Abdelmalek</span>
+                      <br/>
+                  </div>
+                <div className="flex justify-start items-center relative mb-6">
+                    <img src={email} className="absolute ml-4 w-7" alt="Location icon"/>
+                    <span className="pl-12">a_djemaa@estin.dz</span>
+                </div>
+                <div className="flex justify-start items-center relative mb-6">
+                    <img src={localisation} className="absolute ml-4 w-7" alt="Location icon"/>
+                    <span className="pl-12">Zighoud youcef Constantine</span>
+                </div>
+                <div className="flex justify-start items-center relative mb-6">
+                    <img src={work} className="absolute ml-4 w-7" alt="Location icon"/>
+                    <span className="pl-12">Front-end developer </span>
+                </div>
+                <div className="flex flex-row justify-center">
+                    <Link className="cursor-pointer mb-8 p-6" to={'/User'}>
+                        <img src={details} className="w-8" alt="details icon"/>
+                        details
+                    </Link>
+                    <button className= "mb-8 cursor-pointer p-6" onClick={()=>setShowUserInformationCard(true)}>
+                        <img src={edit} className="w-8" alt="edit icon"/>
+                        edit
+                    </button>
+                    <UserInformationCard onClose={handleOnClose} visible={showUserInformationCard}/>
+                </div>
+            </center>
+        </div>
+    </center>
+    )
+}
+
+export default ProfileCard;

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react'
 import styles from "../style.js";
 import { AddCard, AnnouncementCard, FavoriteCard, Navbar2, ProfileCard } from "../components/index.js";
 import FilterCard from "../components/FilterCard.jsx";
-import { close, filter, menu, search } from "../assets";
+import { close, filter, menu, search , arrowTop } from "../assets";
 import { HomeBar } from "../constants/index.js";
 
 
@@ -138,7 +138,7 @@ function Home() {
                     <div className="min-w-[43%]">
                         {records.map((item, index) => (
 
-                            <AnnouncementCard Annonce={item} images={item.images} />
+                            <AnnouncementCard key={index} Annonce={item} images={item.images} />
                         ))}
                     </div>
                     <div className="min-w-[28%]">
@@ -151,8 +151,17 @@ function Home() {
                     <img src={add} className="w-16 animate-pulse " alt="Add icon" />
                 </button>
             </div>
+            <div className="fixed z-40 bottom-0 left-0 ml-12 mb-12 " >
+                            <a href="#">
+                            <img src={arrowTop} className="w-10 animate-bounce " alt="Add icon" />
+                            </a>
+            </div>
             <AddCard onClose={handleOnClose} visible={showAddCard} />
+            
         </div>
+        
+
+
     )
 }
 export default Home

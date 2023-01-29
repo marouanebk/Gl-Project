@@ -80,7 +80,7 @@ function FilterCard({ records, handleChange, visible, onClose }) {
                                 <option value="">--Select State--</option>
                                 {
                                     algeria_cities.map((getState, index) => (
-                                        <option value={getState.wilaya_code} key={index}>{getState.wilaya_name}</option>
+                                        <option value={getState.wilaya_name} key={index}>{getState.wilaya_name}</option>
                                     ))
                                 }
                             </select>
@@ -91,7 +91,7 @@ function FilterCard({ records, handleChange, visible, onClose }) {
                                 <option value="">--Select Commune--</option>
                                 {
                                     algeria_cities.map((getState, index) => (
-                                        <option value={getState.id} key={index}>{getState.commune_name}</option>
+                                        <option value={getState.commune_name} key={index}>{getState.commune_name}</option>
                                     ))
                                 }
                             </select>
