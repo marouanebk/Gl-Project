@@ -74,12 +74,7 @@ export const HomeBar = [
     id: "03",
     icon: profile,
     link: "/User",
-  },
-  {
-    id: "04",
-    icon: logout,
-    link: "/Sign-in",
-  },
+  }
 ];
 export const data = [
   {

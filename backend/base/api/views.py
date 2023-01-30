@@ -25,7 +25,8 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         token['phone'] = user.phone
         token['age'] = user.age
         token['work'] = user.work
-        #token['profile_picture'] = user.profile_picture.url
+        token['profile_picture'] = user.profile_picture.url
+        token['cover_picture'] = user.cover_picture.url
         # ...
 
         return token
@@ -100,6 +101,14 @@ def update_user(request, pk):
             print()
         try:        
             user.age = request.data['age']
+        except:
+            print()
+        try:        
+            user.profile_picture = request.data['profile_pic']
+        except:
+            print()
+        try:        
+            user.cover_picture = request.data['cover_pic']
         except:
             print()
 

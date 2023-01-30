@@ -7,9 +7,11 @@ class User(AbstractUser):
     email = models.EmailField(max_length=240, unique=True)
     age = models.PositiveIntegerField(blank=True,null=True )
     work = models.CharField(null = True, blank = True, max_length=50)
+    username = models.CharField(null = True, blank = True, max_length=60)
     profile_picture = models.ImageField(upload_to="images/", null=True, blank=True)
+    cover_picture = models.ImageField(upload_to="images/", null=True, blank=True)
     passwordResetPin = models.PositiveIntegerField(blank=True, null=True)
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['username']
     def __str__(self):
         return self.email

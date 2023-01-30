@@ -58,7 +58,7 @@ export const AuthProvider = () => {
     console.log("provider is working")
     let [authTokens, setAuthtokens] = useState(() => localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens')): null)
     let [user, setUser] = useState(() => localStorage.getItem('authTokens') ? jwt_decode(localStorage.getItem('authTokens')): null)
-    let [Loading, setLoading] = useState(true)
+    let [loading, setLoading] = useState(true)
     
     const history = useNavigate()
 
@@ -96,6 +96,7 @@ export const AuthProvider = () => {
         }else{
             alert('Something went wrong !')
         }
+        
     }
 
     let updateToken = async() => {
@@ -104,7 +105,7 @@ export const AuthProvider = () => {
             headers: {
                 'Content-Type':'application/json'
             },
-            body:JSON.stringify({'refresh':authTokens.refresh})
+            body:JSON.stringify({'refresh':authTokens?.refresh})
         })
         let data = await response.json()
         if (response.status == 200) {
@@ -114,6 +115,9 @@ export const AuthProvider = () => {
             console.log("token updated")
         }else{
             logoutUser()
+        }
+        if (loading) {
+            setLoading(false)
         }
 
     }
@@ -133,6 +137,9 @@ export const AuthProvider = () => {
     } 
     useEffect(
         ()=>{
+            if (loading) {
+                updateToken()
+            }
             let fourMinutes = 1000 * 60 * 4
             let interval = setInterval(() => {
                 if (authTokens) {
@@ -140,12 +147,12 @@ export const AuthProvider = () => {
                 }
             }, fourMinutes)
             return () => clearInterval()
-        },[authTokens, Loading]
+        },[authTokens, loading]
     )
 
     return(
         <AuthContext.Provider value = {contextData}>
-            <Outlet/>
+            {loading ? null : <Outlet/>}
         </AuthContext.Provider>
     )
 }

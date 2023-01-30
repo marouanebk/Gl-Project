@@ -19,7 +19,8 @@ function ProfileCard () {
     //     navigate('/Sign-in');
     //   };
     let {user} = useContext(AuthContext)
-    let profile_pic = "C:/Users/USUARIO/Desktop/Gl-Project/backend/"+user.profile_picture
+    let profile_pic = "http://127.0.0.1:8000"+user.profile_picture
+    let cover_pic = "http://127.0.0.1:8000"+user.cover_picture
     // let {logoutUser} = useContext(AuthContext)
     const [showUserInformationCard, setShowUserInformationCard] = useState(false);
     const handleOnClose = ()=>setShowUserInformationCard(false)
@@ -28,7 +29,7 @@ function ProfileCard () {
         <div className="bg-black-gradient rounded-3xl flex flex-col relative gap-4 m-4 overflow-x-clip font-poppins text-white font-medium z-40">
             <center>
                 <div className="relative flex flex-col items-center justify-center">
-                    <img className="w-full" src={school} alt="" />
+                    <img className="w-full" src={cover_pic} alt="" />
                     <img className="w-24 rounded-full absolute -bottom-12" src={profile_pic} alt="" />
                 </div>
                 <div className="flex flex-col items-center mt-8 gap-3 ">

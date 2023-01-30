@@ -8,12 +8,13 @@ import axios from 'redaxios'
 
 function ProfileInfoCard () {
     let {user} = useContext(AuthContext)
-    let profile_pic = "../../../backend"+user.profile_picture
+    let profile_pic = "http://127.0.0.1:8000"+user.profile_picture
+    let cover_pic = "http://127.0.0.1:8000"+user.cover_picture
     console.log(user.profile_picture)
 
 
     console.log(user)
-    console.log(user.user_last_name)
+    console.log(user.profile_picture)
     const [showUserInformationCard, setShowUserInformationCard] = useState(false);
     const handleOnClose = ()=>setShowUserInformationCard(false)
     return(
@@ -21,8 +22,8 @@ function ProfileInfoCard () {
         <div className="bg-black-gradient rounded-3xl flex flex-col relative gap-4 m-4 overflow-x-clip font-poppins text-white font-medium z-40">
             <center>
                   <div className="relative flex flex-col items-center justify-center">
-                      <img className="w-full" src={school} alt="image" />
-                      <img className="w-24 rounded-full absolute -bottom-12" src="..\..\..\backend\images\images\2255378.jpg" alt="image" />
+                      <img className="w-full" src={cover_pic} alt="image" />
+                      <img className="w-24 rounded-full absolute -bottom-12" src={profile_pic} alt="image" />
                   </div>
                   <div className="flex flex-col items-center mt-8 gap-3 ">
                       <br/>

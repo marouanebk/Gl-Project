@@ -104,9 +104,11 @@ function Home() {
                                         alt={social.id}
                                         className={`w-[35px] h-[35px] object-contain cursor-pointer ${index !== HomeBar.length - 1 ? "mr-12" : "mr-0"
                                             }`}
-                                        onClick={logoutUser}
+                                            onClick={() => window.open(social.link, "_self")}
                                     />
                                 ))}
+                                <img src="/logout.png" className={`w-[35px] h-[35px] object-contain cursor-pointer "mr-12" : "mr-0"
+                                            }`} alt="" onClick={logoutUser} />
                             </ul>
                             <div className="lg:hidden flex flex-1 justify-end items-center z-50 ">
                                 <img
@@ -128,7 +130,7 @@ function Home() {
                                                 alt={social.id}
                                                 className={`w-[30px] h-[30px] object-contain cursor-pointer m-2 items-center ${index !== HomeBar.length - 1 ? "mr-2" : "mr-0"
                                                     }`}
-                                                onClick={() => window.open(social.link, "_self")}
+                                                    onClick={() => window.open(social.link, "_self")}
                                             />
                                         ))}
                                     </ul>

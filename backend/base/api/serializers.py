@@ -33,7 +33,7 @@ class registrationSerializer(serializers.ModelSerializer):
 class updateUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['first_name','last_name','address','phone']
+        fields = ['first_name','last_name','address','phone','age','work','profile_picture','cover_picture']
     def save(self):
         first_name=self.validated_data['first_name']
         last_name=self.validated_data['last_name']
@@ -41,6 +41,8 @@ class updateUserSerializer(serializers.ModelSerializer):
         address = self.validated_data['address']
         age = self.validated_data['age']
         work = self.validated_data['work']
+        profile_pic = self.validated_data['profile_pic']
+        cover_pic = self.validated_data['cover_pic']
         if(first_name is not null):
             user.first_name = first_name
         if(last_name is not null):
@@ -49,5 +51,13 @@ class updateUserSerializer(serializers.ModelSerializer):
             user.address = address
         if(phone is not null):
             user.phone = phone
+        if(profile_pic is not null):
+            user.profile_picture = profile_pic
+        if(profile_pic is not null):
+            user.profile_picture = profile_pic
+        if(age is not null):
+            user.age = age
+        if(work is not null):
+            user.work = work
         user.save()    
 

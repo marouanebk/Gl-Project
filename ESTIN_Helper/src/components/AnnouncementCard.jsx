@@ -12,6 +12,7 @@ import axios from 'redaxios';
 
 const AnnouncementCard = ({ Annonce, images }) => {
     let { user } = useContext(AuthContext)
+    let profile_pic = "http://127.0.0.1:8000"+user.profile_picture
 
     const [lng] = useState(6.642433);
     const [lat] = useState(36.360155);
@@ -45,7 +46,7 @@ const AnnouncementCard = ({ Annonce, images }) => {
         <section >
             <div className="bg-black-gradient rounded-2xl flex flex-col relative gap-4 m-2 p-6 overflow-x-clip font-poppins text-white font-medium">
                 <div className="sm:flex justify-between items-center">
-                    <img className="w-8 rounded-full absolute " src={people} alt="" />
+                    <img className="w-8 rounded-full absolute " src={"http://127.0.0.1:8000"+user_info.profile_picture} alt="" />
                     <span className="pl-10 text-[16px]">{Annonce.user_info.first_name} {Annonce.user_info.last_name}</span>
                     <div className="flex items-start gap-6 ml-7">
                         <span className="pl-4 mt-1 text-[10px]">{formattedDate}</span>

@@ -12,21 +12,24 @@ function UserInformationCard ({visible , onClose}) {
     if (!visible) return null;
     let {user, updateToken} = useContext(AuthContext)
     console.log(user)
-    const [address,setAddress] = useState()
-    const [first_name,setFirstName] = useState()
-    const [last_name,setLastName] = useState()
-    const [phone,setPhone] = useState()
-    const [work,setWork] = useState()
-    const [age,setAge] = useState()
-    const history = useNavigate()
+    let [address,setAddress] = useState()
+    let [first_name,setFirstName] = useState()
+    let [last_name,setLastName] = useState()
+    let [phone,setPhone] = useState()
+    let [work,setWork] = useState()
+    let [age,setAge] = useState()
+    let [profile_pic, setProfilePic] = useState()
+    let [cover_pic, setCoverPic] = useState()
+    let history = useNavigate()
 
     const handSubmit= (e) =>{
         e.preventDefault()
         
             
-            let body = JSON.stringify({first_name,last_name,address,phone,age,work})
+            let body = JSON.stringify({first_name,last_name,address,phone,age,work,profile_pic,cover_pic})
             console.log(body)
-            const updateUser = (first_name,last_name,address,phone,age,work) => {
+            console.log(cover_pic)
+            const updateUser = (first_name,last_name,address,phone,age,work,profile_pic,cover_pic) => {
 
                 const config = {
                     headers : {
@@ -34,15 +37,21 @@ function UserInformationCard ({visible , onClose}) {
                     }
                 };
             
-                const body = JSON.stringify({first_name,last_name,address,phone,age,work})
+                const body = JSON.stringify({first_name,last_name,address,phone,age,work,profile_pic,cover_pic})
                 let user = jwt_decode(localStorage.getItem('authTokens'))
-                console.log(user.user_id)
+                
+                console.log(profile_pic)
+                console.log(cover_pic)
+
             
                 axios.put('http://127.0.0.1:8000/authApi/update/'+ user.user_id + '/',body,config)
                 
                 
             }
-            updateUser(first_name,last_name,address,phone,age,work)
+            console.log(cover_pic)
+            profile_pic = "images/"+profile_pic
+            cover_pic = "images/"+cover_pic
+            updateUser(first_name,last_name,address,phone,age,work,profile_pic,cover_pic)
             
             
         }
@@ -93,7 +102,7 @@ function UserInformationCard ({visible , onClose}) {
                                 <p className="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX.
                                     800x400px)</p>
                             </div>
-                            <input id="dropzone-file" type="file" className="hidden" accept="image/*"/>
+                            <input id="dropzone-file" name="progile_pic" type="file" className="hidden" onChange={e=>setProfilePic(e.target.files[0].name)} accept="image/*"/>
                         </label>
                     </div>
                     <div className="flex items-center justify-center w-full mx-4">
@@ -110,7 +119,7 @@ function UserInformationCard ({visible , onClose}) {
                                 <p className="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX.
                                     800x400px)</p>
                             </div>
-                            <input id="dropzone-file" type="file" className="hidden" accept="image/*"/>
+                            <input id="dropzone-file2" name="cover_pic" type="file"  className="hidden"  onChange={e=>setCoverPic(e.target.files)} accept="image/*"/>
                         </label>
                     </div>
                 </div>
