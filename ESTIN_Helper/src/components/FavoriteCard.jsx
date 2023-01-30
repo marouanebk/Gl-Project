@@ -7,7 +7,7 @@ import AuthContext from "../context/AuthContext.jsx";
 
 import "../index.css"
 
-function FavoriteCard({ handleChange  , handleIdChange}) {
+function FavoriteCard({ handleChange, handleIdChange }) {
     let { user } = useContext(AuthContext)
 
     const [favorites, setfavorites] = useState([]);
@@ -80,7 +80,7 @@ function FavoriteCard({ handleChange  , handleIdChange}) {
 
                         {favorites.map((item, index) => (
 
-                            <div onClick={() => getAnnonceByid(item.annonce.id)} >  <SmallFavorite key={index} title={item.annonce.title} />
+                            <div onClick={() => getAnnonceByid(item.annonce.id)} >  <SmallFavorite key={index} first_name={item.annonce.user_info.first_name} last_name={item.annonce.user_info.last_name} title={item.annonce.title} />
                             </div>
                         ))}
                     </ul>
@@ -90,15 +90,14 @@ function FavoriteCard({ handleChange  , handleIdChange}) {
     )
 }
 
-function SmallFavorite({ title }) {
+function SmallFavorite({ title , first_name , last_name }) {
 
     return <li className="flex justify-center bg-black-gradient rounded-xl p-2 m-2 hover:border-2 duration-200">
         <div className="flex items-center gap-4 p-4">
             <img className="w-12 h-12 rounded-full"
                 src={people} alt="" />
             <div className="flex flex-col">
-                <strong className="text-slate-900 text-sm font-medium dark:text-slate-200">Djemaa
-                    Abdelmalek</strong>
+                <strong className="text-slate-900 text-sm font-medium dark:text-slate-200"> {first_name} {last_name}</strong>
                 <span className="text-slate-500 text-sm font-medium dark:text-slate-400">{title}</span>
             </div>
         </div>
