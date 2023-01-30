@@ -150,7 +150,7 @@ class AnnonceSearch(generics.ListAPIView):
     # permission_classes = [AllowAny]
     queryset = Annonce.objects.all()
     serializer_class = AnnonceSerializer
-    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+    filter_backends = [django_filters.rest_framework.DjangoFilterBackend , SearchFilter]
     # filter_backends = [SearchFilter, OrderingFilter]
 
     # DjangoFilterBackend
