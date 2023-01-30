@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom"
 import Splash from "./pages/Splash.jsx"
 import SignIn from "./pages/SignIn.jsx"
 import SignUp from "./pages/SignUp.jsx"
+import ResetPassword from "./pages/ResetPassword.jsx"
 import ForgotPassword from "./pages/ForgotPassword.jsx"
 import Home from "./pages/Home.jsx"
 import PrivateRoutes from './utils/PrivateRoutes'
@@ -25,6 +26,8 @@ function App() {
                     <Route path="/Chat" element={<Chat />} />
                     <Route path="/User" element={<User />} />
                 </Route>
+                <Route path="/ForgotPassword" element={<ForgotPassword />} />
+                <Route path="/reset" element={<ResetPassword />} />
             </Route>
             <Route path="/Forgot-password" element={<ForgotPassword />} />
         </Routes>

@@ -18,7 +18,8 @@ function ProfileCard () {
     //     // 👇️ redirect to /contacts
     //     navigate('/Sign-in');
     //   };
-    // let {user} = useContext(AuthContext)
+    let {user} = useContext(AuthContext)
+    let profile_pic = "C:/Users/USUARIO/Desktop/Gl-Project/backend/"+user.profile_picture
     // let {logoutUser} = useContext(AuthContext)
     const [showUserInformationCard, setShowUserInformationCard] = useState(false);
     const handleOnClose = ()=>setShowUserInformationCard(false)
@@ -28,24 +29,24 @@ function ProfileCard () {
             <center>
                 <div className="relative flex flex-col items-center justify-center">
                     <img className="w-full" src={school} alt="" />
-                    <img className="w-24 rounded-full absolute -bottom-12" src={people} alt="" />
+                    <img className="w-24 rounded-full absolute -bottom-12" src={profile_pic} alt="" />
                 </div>
                 <div className="flex flex-col items-center mt-8 gap-3 ">
                     <br />
-                    <span>Djemaa Abdelmalek</span>
+                    <span>{user.first_name} {user.last_name}</span>
                     <br />
                 </div>
                 <div className="flex justify-start items-center relative mb-6">
                     <img src={email} className="absolute ml-4 w-7" alt="Location icon" />
-                    <span className="pl-12">a_djemaa@estin.dz</span>
+                    <span className="pl-12">{user.email}</span>
                 </div>
                 <div className="flex justify-start items-center relative mb-6">
                     <img src={localisation} className="absolute ml-4 w-7" alt="Location icon" />
-                    <span className="pl-12">Zighoud youcef Constantine</span>
+                    <span className="pl-12">{user.address}</span>
                 </div>
                 <div className="flex justify-start items-center relative mb-6">
                     <img src={work} className="absolute ml-4 w-7" alt="Location icon" />
-                    <span className="pl-12">Front-end developer </span>
+                    <span className="pl-12">{user.work} </span>
                 </div>
                 <div className="flex flex-row justify-center">
                     <Link className="cursor-pointer mb-8 p-6" to={'/User'}>

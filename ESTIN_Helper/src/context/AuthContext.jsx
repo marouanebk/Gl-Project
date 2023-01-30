@@ -3,7 +3,7 @@ import { Outlet } from 'react-router'
 import jwt_decode from 'jwt-decode'
 import { useNavigate } from 'react-router-dom';
 import axios from 'redaxios';
-import { Navigate } from 'react-router-dom';
+
 
 const AuthContext = createContext()
 
@@ -22,7 +22,34 @@ export const register = (username,email, password, password2, Nationality, phone
     const body = JSON.stringify({username,email, password, password2, Nationality, phone})
 
     axios.post('http://127.0.0.1:8000/authApi/register/',body,config)
-}    
+}
+
+export const updateUser = (username, Nationality, phone) => {
+
+    const config = {
+        headers : {
+            'Content-Type' : 'application/json',
+        }
+    };
+
+    const body = JSON.stringify({username, Nationality, phone})
+    let user = jwt_decode(localStorage.getItem('authTokens'))
+    console.log(user.user_id)
+
+    axios.put('http://127.0.0.1:8000/authApi/update/'+ user.user_id + '/',body,config)
+}
+
+export const resetPassword = (email) => {
+    const config = {
+        headers : {
+            'Content-Type' : 'application/json',
+        }
+    };
+    const body = JSON.stringify({email})
+    axios.post('http://127.0.0.1:8000/authApi/forgot-password/'+email+'/',body,config)
+}
+
+
 
 
 export const AuthProvider = () => {
@@ -95,7 +122,7 @@ export const AuthProvider = () => {
         setAuthtokens = null
         setUser = null
         localStorage .removeItem('authTokens')
-        history("/")  
+        history("/Sign-in")  
     }
     
     let contextData = {

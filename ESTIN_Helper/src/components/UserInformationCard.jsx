@@ -1,32 +1,82 @@
 import "../index.css"
-import React from "react";
+import React, { useContext } from "react";
 import styles from "../style.js";
+import AuthContext from "../context/AuthContext";
+import { useState } from "react";
+import { useNavigate } from "react-router";
+import jwt_decode from 'jwt-decode'
+import axios from 'redaxios'
+
 
 function UserInformationCard ({visible , onClose}) {
     if (!visible) return null;
+    let {user, updateToken} = useContext(AuthContext)
+    console.log(user)
+    const [address,setAddress] = useState()
+    const [first_name,setFirstName] = useState()
+    const [last_name,setLastName] = useState()
+    const [phone,setPhone] = useState()
+    const [work,setWork] = useState()
+    const [age,setAge] = useState()
+    const history = useNavigate()
+
+    const handSubmit= (e) =>{
+        e.preventDefault()
+        
+            
+            let body = JSON.stringify({first_name,last_name,address,phone,age,work})
+            console.log(body)
+            const updateUser = (first_name,last_name,address,phone,age,work) => {
+
+                const config = {
+                    headers : {
+                        'Content-Type' : 'application/json',
+                    }
+                };
+            
+                const body = JSON.stringify({first_name,last_name,address,phone,age,work})
+                let user = jwt_decode(localStorage.getItem('authTokens'))
+                console.log(user.user_id)
+            
+                axios.put('http://127.0.0.1:8000/authApi/update/'+ user.user_id + '/',body,config)
+                
+                
+            }
+            updateUser(first_name,last_name,address,phone,age,work)
+            
+            
+        }
+    
     return(
         <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center z-50 m-4">
             <div className="bg-black-gradient border-solid border-2 rounded-[20px] w-[520px] h-[98%] p-4 font-poppins text-primary">
                 <button onClick={onClose} className="right-0 text-white text-[20px]">X</button>
+                <form onSubmit={handSubmit}>
+
+                
                 <div className=" items-center flex flex-row sm:justify-start justify-center  my-4">
-                    <label className="text-white p-2 text-[14px]">Name:</label>
-                    <input className="h-11 w-full border-solid border-2 bg-black-gradient text-white rounded-[50px] p-4 text-[14px]" type="text" placeholder="Name"/>
+                    <label className="text-white p-2 text-[14px]">First Name:</label>
+                    <input className="h-11 w-full border-solid border-2 bg-black-gradient text-white rounded-[50px] p-4 text-[14px]" name="first_name" id="first_name" onChange={e=>setFirstName(e.target.value)} type="text" placeholder={user.first_name}/>
                 </div>
                 <div className=" items-center flex flex-row sm:justify-start justify-center my-4">
-                    <label className="text-white p-2 text-[14px]">Localisation:</label>
-                    <input className="h-11 w-full border-solid border-2 bg-black-gradient text-white rounded-[50px] p-4 text-[14px]" type="text" placeholder="Localisation"/>
+                    <label className="text-white p-2 text-[14px]">Last Name:</label>
+                    <input className="h-11 w-full border-solid border-2 bg-black-gradient text-white rounded-[50px] p-4 text-[14px]" type="text" name="last_name" id="last_name" onChange={e=>setLastName(e.target.value)} placeholder={user.last_name}/>
+                </div>
+                <div className=" items-center flex flex-row sm:justify-start justify-center my-4">
+                    <label className="text-white p-2 text-[14px]">Address:</label>
+                    <input className="h-11 w-full border-solid border-2 bg-black-gradient text-white rounded-[50px] p-4 text-[14px]" type="text" name="address" id="address" onChange={e=>setAddress(e.target.value)} placeholder={user.address}/>
                 </div>
                 <div className=" items-center flex flex-row sm:justify-start justify-center my-4">
                     <label className="text-white p-2 text-[14px]">Work:</label>
-                    <input className="h-11 w-full border-solid border-2 bg-black-gradient text-white rounded-[50px] p-4 text-[14px] " type="text" placeholder="Work"/>
+                    <input className="h-11 w-full border-solid border-2 bg-black-gradient text-white rounded-[50px] p-4 text-[14px] " type="text" name="work" id="work" onChange={e=>setWork(e.target.value)} placeholder={user.work}/>
                 </div>
                 <div className=" items-center flex flex-row sm:justify-start justify-center my-4">
                     <label className="text-white p-2 text-[14px]">Phone:</label>
-                    <input className="h-11 w-full border-solid border-2 bg-black-gradient text-white rounded-[50px] p-4 text-[14px]" type="text" placeholder="Phone"/>
+                    <input className="h-11 w-full border-solid border-2 bg-black-gradient text-white rounded-[50px] p-4 text-[14px]" type="text" name="phone" id="phone" onChange={e=>setPhone(e.target.value)} placeholder={user.phone}/>
                 </div>
                 <div className=" items-center flex flex-row sm:justify-start justify-center my-4">
                     <label className="text-white p-2 text-[14px]">Age:</label>
-                    <input className="h-11 w-full border-solid border-2 bg-black-gradient text-white rounded-[50px] p-4 text-[14px]" type="text" placeholder="Age"/>
+                    <input className="h-11 w-full border-solid border-2 bg-black-gradient text-white rounded-[50px] p-4 text-[14px]" type="text" name="age" id="age" onChange={e=>setAge(e.target.value)} placeholder={user.age}/>
                 </div>
                 <div className="flex flex-row justify-between items-center p-2 ">
                     <div className="flex items-center justify-center w-full mx-4">
@@ -65,10 +115,11 @@ function UserInformationCard ({visible , onClose}) {
                     </div>
                 </div>
                 <center>
-                    <button style={{ cursor:"pointer" }} className={`${styles.paragraph} mt-4 text-[20px]  pt-3 pb-3 pl-7 pr-7 mb-8 cursor-pointer items-start bg-blue-gradient rounded-[30px]`}>
+                    <button style={{ cursor:"pointer" }} type='submit' className={`${styles.paragraph} mt-4 text-[20px]  pt-3 pb-3 pl-7 pr-7 mb-8 cursor-pointer items-start bg-blue-gradient rounded-[30px]`}>
                         Update
                     </button>
                 </center>
+                </form>
             </div>
 
         </div>

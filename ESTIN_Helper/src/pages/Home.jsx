@@ -9,9 +9,12 @@ import { HomeBar } from "../constants/index.js";
 
 import { socialMedia } from "../constants/index.js";
 import { add } from "../assets/index.js";
+import { useContext } from 'react';
+import AuthContext from '../context/AuthContext.jsx';
 
 
 function Home() {
+    let {logoutUser} = useContext(AuthContext)
     const [showFilterCard, setShowFilterCard] = useState(false);
 
 
@@ -83,7 +86,7 @@ function Home() {
                                         alt={social.id}
                                         className={`w-[35px] h-[35px] object-contain cursor-pointer ${index !== HomeBar.length - 1 ? "mr-12" : "mr-0"
                                             }`}
-                                        onClick={() => window.open(social.link, "_self")}
+                                        onClick={logoutUser}
                                     />
                                 ))}
                             </ul>

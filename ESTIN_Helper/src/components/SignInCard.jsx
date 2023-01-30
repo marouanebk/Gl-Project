@@ -3,6 +3,7 @@ import {facebook} from "../assets/index.js";
 import "../index.css"
 import React, {useContext} from "react";
 import AuthContext from "../context/AuthContext";
+import {Link} from "react-router-dom";
 
 const SignInCard = () => {
     let {loginUser} = useContext(AuthContext)
@@ -33,7 +34,9 @@ const SignInCard = () => {
       </p>
         <img src={facebook} alt="User" className="w-[45px] h-[45px] mb-10" style={{ cursor:"pointer" }}/>
           <a style={{ cursor:"pointer" }} href={null} className={`${styles.paragraph} mt-1 text-[15px] mb-0`}>
+            <Link to={"/ForgotPassword"} >
               Forgot password?
+            </Link>
           </a>
       </center>
   </section>

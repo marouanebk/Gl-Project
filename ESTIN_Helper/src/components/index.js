@@ -25,6 +25,7 @@ import ContactCard from "./ContactCard.jsx";
 import User from "../pages/User.jsx";
 import ProfileInfoCard from "./ProfileInfoCard.jsx";
 import Navbar3 from "./Navbar3.jsx";
+import ResetCard from "./ResetCard.jsx";
 export {
     Navbar,
     What,
@@ -53,4 +54,5 @@ export {
     User,
     ProfileInfoCard,
     Navbar3,
+    ResetCard,
 };
