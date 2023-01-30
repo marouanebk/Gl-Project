@@ -117,7 +117,13 @@ def getFavorites(request , user_id):
 def getUserAnnonces(request , user_id):
     annonces = Annonce.objects.filter(author = user_id)
     serializer = AnnonceSerializer(annonces, many=True)
-    return Response(serializer.data , content_type='application/json' )
+    annonce_data = serializer.data
+    for item in annonce_data:
+        for item2 in item['images']:
+            item2["image"] = "http://127.0.0.1:8000" + item2["image"]
+
+
+    return Response(annonce_data, content_type='application/json' )
 
 
 
@@ -148,22 +154,17 @@ class AnnonceSearch(generics.ListAPIView):
     # filter_backends = [SearchFilter, OrderingFilter]
 
     # DjangoFilterBackend
-    search_fields = ['^title' , "^description"]
+    search_fields = ['^title' , "^description", "id"]
     filterset_fields = ["wilaya", "commune"]
 
 class AnnonceViewSet(ModelViewSet):
     queryset = Annonce.objects.all()
     serializer_class = AnnonceSerializer
-    
     parser_classes = (MultiPartParser, FormParser)
-    
-    
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    search_fields = ['title', ]
+    search_fields = ['title' ]
     filterset_fields = ["description", "created"]
-    ordering = ('-created')
-
-    # ordering_fields = ['old_price']
+    ordering = ('-created' , )
     pagination_class = PageNumberPagination
 
 class Favorites(ModelViewSet):

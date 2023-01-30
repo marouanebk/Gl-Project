@@ -44,6 +44,9 @@ def createFavorites(request):
 def getAnnonceDetail(request, pk):
     notes = Annonce.objects.get(id=pk)
     serializer = AnnonceSerializer(notes, many=False)
+    fav_data = serializer.data
+    for fav in fav_data['images']:
+        fav["image"] = "http://127.0.0.1:8000" + fav["image"]
     return Response(serializer.data)
 
 

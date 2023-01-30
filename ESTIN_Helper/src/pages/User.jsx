@@ -6,6 +6,8 @@ import {
     Navbar2,
     ProfileInfoCard
 } from "../components/index.js";
+import { arrowTop } from "../assets";
+
 
 import React, { useState, useEffect, useCallback } from 'react'
 import { close, filter, menu, search } from "../assets";
@@ -31,6 +33,10 @@ function User() {
     useEffect(() => {
         getRecords();
     }, []);
+
+    const handleChange = (newRecords) => {
+        setRecords(newRecords);
+    }
 
 
     const getRecords = async () => {
@@ -132,13 +138,13 @@ function User() {
             <div className={`bg-primary`}>
                 <div className="flex justify-between md:flex-row flex-col ">
                     <div className="min-w-[28%]">
-                        <FavoriteCard />
+                        <FavoriteCard handleChange={handleChange} />
                     </div>
                     <div className="min-w-[43%]">
                         <ProfileInfoCard />
                         {records.map((item, index) => (
 
-                            <AnnouncementCard  key={index} Annonce={item} images={item.images} />
+                            <AnnouncementCard key={index} Annonce={item} images={item.images} />
                         ))}
                         {/* <AnnouncementCard/> */}
                     </div>
@@ -146,6 +152,11 @@ function User() {
                         <ContactCard />
                     </div>
                 </div>
+            </div>
+            <div className="fixed z-40 bottom-0 left-0 ml-12 mb-12 " >
+                <a href="#">
+                    <img src={arrowTop} className="w-10 animate-bounce " alt="Add icon" />
+                </a>
             </div>
         </div>
     )

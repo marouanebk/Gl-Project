@@ -19,10 +19,7 @@ class Annonce(models.Model):
     sold = models.IntegerField(null=False, blank=False)
     wilaya = models.TextField(null=False, blank=False)
     commune = models.TextField(null=False, blank=False)
-
-
     created = models.DateTimeField(auto_now_add=True)
-    # adr = models.ForeignKey("Adress", verbose_name=("Adress"), on_delete=models.CASCADE , null = True )
 
 
     def __str__(self):
@@ -30,11 +27,7 @@ class Annonce(models.Model):
 
 class Photo(models.Model):
     owner = models.ForeignKey("annonce", related_name=("images"), on_delete=models.CASCADE)
-    # desc = models.CharField( max_length=50)
     image = models.ImageField(upload_to=upload_to,  null = True , blank = True)
-    # storage=FirebaseStorage(),
-    # def __str__(self):
-    #     return 
 
 
 

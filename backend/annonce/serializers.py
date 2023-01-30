@@ -27,7 +27,7 @@ class AnnonceSerializer(serializers.ModelSerializer):
     )
     class Meta:
         model = Annonce
-        fields = ('id','author','user_info','title','description' ,'category', 'theme','modality','sold','wilaya', 'commune','images' , 'uploaded_images')
+        fields = ('id','author','user_info','title','description' ,'category', 'theme','modality','sold','wilaya', 'commune','images' , 'uploaded_images' , 'created')
    
     def create(self, validated_data):
         uploaded_data = validated_data.pop('uploaded_images')      

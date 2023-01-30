@@ -7,7 +7,7 @@ import AuthContext from "../context/AuthContext.jsx";
 
 import "../index.css"
 
-function FavoriteCard() {
+function FavoriteCard({ handleChange  , handleIdChange}) {
     let { user } = useContext(AuthContext)
 
     const [favorites, setfavorites] = useState([]);
@@ -27,10 +27,45 @@ function FavoriteCard() {
         }
 
         const favorites = await response.json();
-        console.log(favorites);
+
+
 
         setfavorites(favorites);
     }
+
+    async function getAnnonceByid(id) {
+        const response = await fetch(`http://127.0.0.1:8000/api/annonces/detail/${id}/`);
+
+        console.log(`IN GET BY ${id} `)
+        if (!response.ok) {
+            const message = `An error occurred: ${response.statusText}`;
+            window.alert(message);
+            return;
+        }
+
+        const item = await response.json();
+        console.log("item.images");
+        console.log(item.images);
+
+
+        // const array = [item];
+        // console.log("length");
+        // console.log(item.images.length);
+        // for (let i = 0; i < item.images.length; i++) {
+        //     array.images[i].image = "http://127.0.0.1:8000"+array.images[i].image;
+        //     console.log("modifying");
+        //     console.log(array.images[i].image);
+        // } 
+        // console.log(item.images);
+        // console.log("array");
+
+        const array = [item];
+        // handleIdChange(item.id);
+
+        handleChange(array);
+    }
+
+
 
     return (
         <center>
@@ -38,24 +73,15 @@ function FavoriteCard() {
                 <div className="flex justify-center items-center">
                     <img src={star} className="w-8" alt="Location icon" />
                     <span className="text-[20px] p-2">Favorites</span>
+                    {/* shadow-lg ring-1 ring-black/5 rounded-xl */}
                 </div>
-                <div className="overflow-scroll justify-center relative w-full shadow-lg ring-1 ring-black/5 rounded-xl flex items-center gap-6 ">
+                <div className="overflow-scroll justify-center relative w-full  flex items-center gap-6 ">
                     <ul>
-                        <br /><br /><br /><br /><br /><br />
-                        {/* <li className="flex w-[300px] justify-center bg-black-gradient rounded-xl p-2 m-2 hover:border-2 duration-200">
-                            <div className="flex items-center gap-4 p-4">
-                                <img className="w-12 h-12 rounded-full"
-                                    src={people} alt="" />
-                                <div className="flex flex-col">
-                                    <strong className="text-slate-900 text-sm font-medium dark:text-slate-200">Djemaa
-                                        Abdelmalek</strong>
-                                    <span className="text-slate-500 text-sm font-medium dark:text-slate-400">Title</span>
-                                </div>
-                            </div>
-                        </li> */}
+
                         {favorites.map((item, index) => (
 
-                            <SmallFavorite />
+                            <div onClick={() => getAnnonceByid(item.annonce.id)} >  <SmallFavorite key={index} title={item.annonce.title} />
+                            </div>
                         ))}
                     </ul>
                 </div>
@@ -64,7 +90,8 @@ function FavoriteCard() {
     )
 }
 
-function SmallFavorite() {
+function SmallFavorite({ title }) {
+
     return <li className="flex justify-center bg-black-gradient rounded-xl p-2 m-2 hover:border-2 duration-200">
         <div className="flex items-center gap-4 p-4">
             <img className="w-12 h-12 rounded-full"
@@ -72,7 +99,7 @@ function SmallFavorite() {
             <div className="flex flex-col">
                 <strong className="text-slate-900 text-sm font-medium dark:text-slate-200">Djemaa
                     Abdelmalek</strong>
-                <span className="text-slate-500 text-sm font-medium dark:text-slate-400">Title</span>
+                <span className="text-slate-500 text-sm font-medium dark:text-slate-400">{title}</span>
             </div>
         </div>
     </li>

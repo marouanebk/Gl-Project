@@ -10,7 +10,7 @@ function ContactCard () {
                         <img src={contacts} className="w-8" alt="Location icon"/>
                         <span className="text-[20px] p-2">Contacts</span>
                     </div>
-                <div className="overflow-scroll justify-center relative w-full shadow-lg ring-1 ring-black/5 rounded-xl flex items-center gap-6 ">
+                <div className="overflow-scroll justify-center relative w-full  flex items-center gap-6 ">
                     <ul>
                         <br/><br/><br/><br/><br/><br/>
                         <li className="flex w-[300px] justify-center bg-black-gradient rounded-xl p-2 m-2 hover:border-2 duration-200">

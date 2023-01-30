@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import styles from "../style.js";
-import { AddCard, AnnouncementCard, FavoriteCard, Navbar2, ProfileCard } from "../components/index.js";
+import { AddCard, AnnouncementCard, FavoriteCard, Navbar2, ProfileCard, SnackBar } from "../components/index.js";
 import FilterCard from "../components/FilterCard.jsx";
 import { close, filter, menu, search , arrowTop } from "../assets";
 import { HomeBar } from "../constants/index.js";
@@ -14,17 +14,33 @@ import { add } from "../assets/index.js";
 function Home() {
     const [showFilterCard, setShowFilterCard] = useState(false);
 
-
     const [showAddCard, setShowAddCard] = useState(false);
+    const [showSnackBar, setshowSnackBar] = useState(false);
     const handleOnClose = () => setShowAddCard(false)
     const handleOnClose2 = () => setShowFilterCard(false)
+
+
+    const handleOnCLose3 = () => setshowSnackBar(false)
+
+    const Close =() => {
+        setshowSnackBar(true);
+        setShowAddCard(false);
+    }
 
     const [toggle, setToggle] = useState(false);
 
     const [records, setRecords] = useState([]);
     const handleChange = (newRecords) => {
         setRecords(newRecords);
+
+    }   
+     const handleIdChange = (newRecords) => {
+
+        setRecords(newRecords);
+
     }
+
+    
 
     useEffect(() => {
         getRecords();
@@ -39,9 +55,7 @@ function Home() {
             window.alert(message);
             return;
         }
-
         const records = await response.json();
-
         setRecords(records);
     }
 
@@ -50,6 +64,7 @@ function Home() {
 
         if (key) {
             let results = await fetch('http://127.0.0.1:8000/api/annonces/custom/?search=' + key);
+            console.log(key);
             results = await results.json();
             if (results) {
                 setRecords(results);
@@ -142,7 +157,7 @@ function Home() {
                         ))}
                     </div>
                     <div className="min-w-[28%]">
-                        <FavoriteCard />
+                        <FavoriteCard handleIdChange= {handleIdChange} handleChange={handleChange} />
                     </div>
                 </div>
             </div>
@@ -156,7 +171,9 @@ function Home() {
                             <img src={arrowTop} className="w-10 animate-bounce " alt="Add icon" />
                             </a>
             </div>
-            <AddCard onClose={handleOnClose} visible={showAddCard} />
+            <AddCard onClose={Close} visible={showAddCard} />
+            <SnackBar onClose={handleOnCLose3} message="success" color="green" visible={showSnackBar} />
+
             
         </div>
         

@@ -2,6 +2,8 @@ import "../index.css"
 import { algeria_cities } from "../constants/index.js";
 import styles from "../style.js";
 import React, { useState, useEffect, useCallback } from 'react'
+import { SnackBar } from "./index.js";
+
 
 
 function FilterCard({ records, handleChange, visible, onClose }) {
@@ -9,6 +11,9 @@ function FilterCard({ records, handleChange, visible, onClose }) {
     const [commune, setcommune] = useState('');
     const [start, setstart] = useState('');
     const [end, setend] = useState('');
+    const [ShowSnackBar , setShowSnackBar] = useState(false);
+    const handleOnClose = () => setShowSnackBar(false) ;
+
     const filterHandler = async (event) => {
         event.preventDefault();
         console.log("in filter");
@@ -36,17 +41,25 @@ function FilterCard({ records, handleChange, visible, onClose }) {
         results = await results.json();
         if (results) {
             handleChange(results);
+            setShowSnackBar(true);
         }
 
+  
     }
     // const [records, setRecords] = useState([]);
 
     if (!visible) return null;
+    const Close = () =>    {
+        setShowSnackBar(false);
+        onClose();
+
+    }
+
     return (
         <form onSubmit={filterHandler}>
             <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center z-50 m-4">
                 <div className="bg-black-gradient border-solid border-2 rounded-[20px] w-[550px] h-[65%] p-4 font-poppins text-primary font-medium te">
-                    <button onClick={onClose} className="right-0 text-white text-[20px]">X</button>
+                    <button onClick={Close} className="right-0 text-white text-[20px]">X</button>
                     <div className=" items-center flex flex-wrap sm:justify-start justify-center w-full relative">
                         <div className="flex justify-start items-center mb-8 m-0">
                             <label className="text-white p-2 text-[14px]">Category:</label>
@@ -108,9 +121,10 @@ function FilterCard({ records, handleChange, visible, onClose }) {
                         </div>
                     </div>
                     <center>
-                        <button type="submit" style={{ cursor: "pointer" }} className={`${styles.paragraph}left-0 text-[20px]  pt-3 pb-3 pl-7 pr-7 items-center bg-blue-gradient rounded-[30px]`}>
+                        <button  type="submit" style={{ cursor: "pointer" }} className={`${styles.paragraph}left-0 text-[20px]  pt-3 pb-3 pl-7 pr-7 items-center bg-blue-gradient rounded-[30px]`}>
                             Filter
                         </button>
+                        <SnackBar onClose={handleOnClose} visible = {ShowSnackBar}/>
                     </center>
                 </div>
             </div>
