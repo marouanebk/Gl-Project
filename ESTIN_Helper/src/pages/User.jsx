@@ -6,14 +6,20 @@ import {
     Navbar2,
     ProfileInfoCard
 } from "../components/index.js";
+import { arrowTop } from "../assets";
+
 
 import React, { useState, useEffect, useCallback } from 'react'
 import { close, filter, menu, search } from "../assets";
 import { HomeBar } from "../constants/index.js";
 import FilterCard from "../components/FilterCard.jsx";
+import { useContext } from "react";
+import AuthContext from "../context/AuthContext.jsx";
 
 function User() {
     const [showFilterCard, setShowFilterCard] = useState(false);
+    let { user } = useContext(AuthContext)
+
 
 
     const [showAddCard, setShowAddCard] = useState(false);
@@ -28,9 +34,13 @@ function User() {
         getRecords();
     }, []);
 
+    const handleChange = (newRecords) => {
+        setRecords(newRecords);
+    }
+
 
     const getRecords = async () => {
-        const response = await fetch(`http://127.0.0.1:8000/api/products/`);
+        const response = await fetch(`http://127.0.0.1:8000/api/user/${user.user_id}/`);
 
         if (!response.ok) {
             const message = `An error occurred: ${response.statusText}`;
@@ -39,7 +49,6 @@ function User() {
         }
 
         const records = await response.json();
-
         setRecords(records);
     }
 
@@ -47,7 +56,7 @@ function User() {
         let key = event.target.value;
 
         if (key) {
-            let results = await fetch(`http://127.0.0.1:8000/api/annonces/custom/?search=second&body=testing+df`);
+            let results = await fetch('http://127.0.0.1:8000/api/annonces/custom/?search=' + key);
             results = await results.json();
             if (results) {
                 setRecords(results);
@@ -129,16 +138,25 @@ function User() {
             <div className={`bg-primary`}>
                 <div className="flex justify-between md:flex-row flex-col ">
                     <div className="min-w-[28%]">
-                        <FavoriteCard />
+                        <FavoriteCard handleChange={handleChange} />
                     </div>
                     <div className="min-w-[43%]">
                         <ProfileInfoCard />
+                        {records.map((item, index) => (
+
+                            <AnnouncementCard key={index} Annonce={item} images={item.images} />
+                        ))}
                         {/* <AnnouncementCard/> */}
                     </div>
                     <div className="min-w-[28%]">
                         <ContactCard />
                     </div>
                 </div>
+            </div>
+            <div className="fixed z-40 bottom-0 left-0 ml-12 mb-12 " >
+                <a href="#">
+                    <img src={arrowTop} className="w-10 animate-bounce " alt="Add icon" />
+                </a>
             </div>
         </div>
     )

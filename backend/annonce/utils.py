@@ -1,9 +1,10 @@
 from rest_framework import generics
 from rest_framework.response import Response
-from .models import Annonce , Photo
-from .serializers import AnnonceSerializer
+from .models import Annonce , Photo , Fav
+from .serializers import AnnonceSerializer , FavSerializer
 from django.shortcuts import get_object_or_404
 from rest_framework import filters
+from base.models import User
 
 
 
@@ -16,10 +17,36 @@ def getAnnoncesList(request):
     serializer = AnnonceSerializer(notes, many=True)
     return Response(serializer.data)
 
+def getFavorites(request , user_id):
+    print("heere")
+    user = get_object_or_404(User, pk=user_id)
+
+    favorites = Fav.objects.all(user = user)
+    serializer = FavSerializer(favorites, many=True)
+    fav_data = serializer.data
+    for fav in fav_data:
+        annonce = Annonce.objects.get(id=fav['annonce'])
+        fav['annonce'] = AnnonceSerializer(annonce).data
+
+    return Response(fav_data)
+
+def createFavorites(request):
+    data = request.data
+    user = User.objects.get(id=data['user'])
+    annonce = Annonce.objects.get(id=data['annonce'])
+    fav = Fav.objects.create(user = user,annonce = annonce)
+    serializer = FavSerializer(fav, many=False)
+    return Response(serializer.data)
+
+
+
 
 def getAnnonceDetail(request, pk):
     notes = Annonce.objects.get(id=pk)
     serializer = AnnonceSerializer(notes, many=False)
+    fav_data = serializer.data
+    for fav in fav_data['images']:
+        fav["image"] = "http://127.0.0.1:8000" + fav["image"]
     return Response(serializer.data)
 
 

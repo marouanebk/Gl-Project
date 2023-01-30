@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import styles from "../style.js";
-import { AddCard, AnnouncementCard, FavoriteCard, Navbar2, ProfileCard } from "../components/index.js";
+import { AddCard, AnnouncementCard, FavoriteCard, Navbar2, ProfileCard, SnackBar } from "../components/index.js";
 import FilterCard from "../components/FilterCard.jsx";
-import { close, filter, menu, search } from "../assets";
+import { close, filter, menu, search , arrowTop } from "../assets";
 import { HomeBar } from "../constants/index.js";
 
 
@@ -17,14 +17,33 @@ function Home() {
     let {logoutUser} = useContext(AuthContext)
     const [showFilterCard, setShowFilterCard] = useState(false);
 
-
     const [showAddCard, setShowAddCard] = useState(false);
+    const [showSnackBar, setshowSnackBar] = useState(false);
     const handleOnClose = () => setShowAddCard(false)
     const handleOnClose2 = () => setShowFilterCard(false)
+
+
+    const handleOnCLose3 = () => setshowSnackBar(false)
+
+    const Close =() => {
+        setshowSnackBar(true);
+        setShowAddCard(false);
+    }
 
     const [toggle, setToggle] = useState(false);
 
     const [records, setRecords] = useState([]);
+    const handleChange = (newRecords) => {
+        setRecords(newRecords);
+
+    }   
+     const handleIdChange = (newRecords) => {
+
+        setRecords(newRecords);
+
+    }
+
+    
 
     useEffect(() => {
         getRecords();
@@ -39,9 +58,7 @@ function Home() {
             window.alert(message);
             return;
         }
-
         const records = await response.json();
-
         setRecords(records);
     }
 
@@ -49,7 +66,8 @@ function Home() {
         let key = event.target.value;
 
         if (key) {
-            let results = await fetch(`http://127.0.0.1:8000/api/annonces/custom/?search=second&body=testing+df`);
+            let results = await fetch('http://127.0.0.1:8000/api/annonces/custom/?search=' + key);
+            console.log(key);
             results = await results.json();
             if (results) {
                 setRecords(results);
@@ -76,7 +94,7 @@ function Home() {
                                 <button style={{ cursor: "pointer" }} className={``} onClick={() => setShowFilterCard(true)}>
                                     <img src={filter} className="flex ml-4 w-8" alt="Filter" />
                                 </button>
-                                <FilterCard onClose={handleOnClose2} visible={showFilterCard} />
+                                <FilterCard records={records} handleChange={handleChange} onClose={handleOnClose2} visible={showFilterCard} />
                             </div>
                             <ul className="list-none lg:flex hidden justify-end items-center flex-1">
                                 {HomeBar.map((social, index) => (
@@ -138,11 +156,11 @@ function Home() {
                     <div className="min-w-[43%]">
                         {records.map((item, index) => (
 
-                            <AnnouncementCard Annonce={item} images={item.images} />
+                            <AnnouncementCard key={index} Annonce={item} images={item.images} />
                         ))}
                     </div>
                     <div className="min-w-[28%]">
-                        <FavoriteCard />
+                        <FavoriteCard handleIdChange= {handleIdChange} handleChange={handleChange} />
                     </div>
                 </div>
             </div>
@@ -151,8 +169,19 @@ function Home() {
                     <img src={add} className="w-16 animate-pulse " alt="Add icon" />
                 </button>
             </div>
-            <AddCard onClose={handleOnClose} visible={showAddCard} />
+            <div className="fixed z-40 bottom-0 left-0 ml-12 mb-12 " >
+                            <a href="#">
+                            <img src={arrowTop} className="w-10 animate-bounce " alt="Add icon" />
+                            </a>
+            </div>
+            <AddCard onClose={Close} visible={showAddCard} />
+            <SnackBar onClose={handleOnCLose3} message="success" color="green" visible={showSnackBar} />
+
+            
         </div>
+        
+
+
     )
 }
 export default Home

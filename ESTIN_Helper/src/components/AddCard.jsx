@@ -5,17 +5,22 @@ import styles from "../style.js";
 import axios from 'redaxios';
 import { useContext } from "react";
 import AuthContext from "../context/AuthContext.jsx";
+import { SnackBar } from "./index.js";
+
 
 
 function AddCard({ visible, onClose }) {
     let { user } = useContext(AuthContext)
+    const [ShowSnackBarError, setShowSnackBarError] = useState(false);
+    const handleOnClose = () => setShowSnackBarError(false);
+
 
     const [state, setState] = useState({
         title: '',
         description: '',
-        category: '',
-        theme: '',
-        modality: '',
+        category: 'PrimarySchool',
+        theme: 'Mathematics',
+        modality: 'Online',
         sold: 0,
         commune: '',
         wilaya: '',
@@ -42,19 +47,6 @@ function AddCard({ visible, onClose }) {
 
     async function onSubmit(e) {
         e.preventDefault();
-        var temp = false;
-        const editedPerson = {
-
-            title: state.title,
-            description: state.description,
-            category: state.category,
-            theme: state.theme,
-            modality: state.modality,
-            sold: state.sold,
-            commune: state.commune,
-            wilaya: state.wilaya,
-            uploaded_images: state.uploaded_images,
-        };
         var formData = new FormData();
         formData.append('author', user.user_id);
         formData.append('created_by', user.user_id);
@@ -73,17 +65,17 @@ function AddCard({ visible, onClose }) {
         });
         console.log("userid" + user.user_id);
         console.log(user);
-        // console.log(selectedFiles);
+        try {
+            const response = await axios.post('http://127.0.0.1:8000/api/products/', formData);
+            if (response) {
+                onClose();
+            }
 
-        // await fetch(`http://127.0.0.1:8000/api/products/`, {
-        //     method: "POST",
-        //     body: JSON.stringify(editedPerson),
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        // });
-        const response = await axios.post('http://127.0.0.1:8000/api/products/', formData);
-        console.log(response);
+
+        } catch {
+            setShowSnackBarError(true);
+
+        }
 
         // window.alert("Edited successfully first condition")
 
@@ -137,7 +129,7 @@ function AddCard({ visible, onClose }) {
                                     <option value="">--Select State--</option>
                                     {
                                         algeria_cities.map((getState, index) => (
-                                            <option value={getState.wilaya_code} key={index}>{getState.wilaya_name}</option>
+                                            <option value={getState.wilaya_name} key={index}>{getState.wilaya_name}</option>
                                         ))
                                     }
                                 </select>
@@ -148,7 +140,7 @@ function AddCard({ visible, onClose }) {
                                     <option value="">--Select Daira--</option>
                                     {
                                         algeria_cities.map((getState, index) => (
-                                            <option value={getState.wilaya_code} key={index}>{getState.daira_name}</option>
+                                            <option value={getState.daira_name} key={index}>{getState.daira_name}</option>
                                         ))
                                     }
                                 </select>
@@ -159,7 +151,7 @@ function AddCard({ visible, onClose }) {
                                     <option value="">--Select Commune--</option>
                                     {
                                         algeria_cities.map((getState, index) => (
-                                            <option value={getState.id} key={index}>{getState.commune_name}</option>
+                                            <option value={getState.commune_name} key={index}>{getState.commune_name}</option>
                                         ))
                                     }
                                 </select>
@@ -201,6 +193,7 @@ function AddCard({ visible, onClose }) {
                         <button type='submit' style={{ cursor: "pointer" }} className={`${styles.paragraph} mt-4 text-[20px]  pt-3 pb-3 pl-7 pr-7 mb-8 cursor-pointer items-start bg-blue-gradient rounded-[30px]`}>
                             Add
                         </button>
+                        <SnackBar onClose={handleOnClose} message="Error" color="blue" visible={ShowSnackBarError} />
                     </center>
                 </div>
 

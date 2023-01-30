@@ -3,60 +3,51 @@ from rest_framework.test import APITestCase, APIRequestFactory
 from django.urls import reverse
 from rest_framework import status
 # from django.contrib.auth import get_user_model
+from rest_framework.test import APIClient
+from base.models import User
+from .models import Annonce
+
 
 
 # User = get_user_model()
 
 
-class HelloWorldTestCase(APITestCase):
-    def test_hello_world(self):
-        response = self.client.get(reverse("products"))
+class TestAnnonceCreation(APITestCase):
+    client = APIClient()
 
+    def setUp(self):
+        self.user = User.objects.create_user(
+            username='testuser', email='testuser@example.com', password='secret'
+        )
+
+        # create annonce
+        self.annonce = Annonce.objects.create(
+            author=self.user, title='test annonce',
+            description='test description', category='test category',
+            theme='test theme', modality='test modality',
+            sold=10, wilaya='test wilaya', commune='test commune'
+        )
+    def testCreation(self):
+        annonce = Annonce.objects.get(title = 'test annonce')
+        self.assertEqual(annonce.author.email, 'testuser@example.com')
+        self.assertEqual(annonce.description, 'test description')
+        self.assertEqual(annonce.category, 'test category')
+        self.assertEqual(annonce.theme, 'test theme')
+        self.assertEqual(annonce.modality, 'test modality')
+        self.assertEqual(annonce.sold, 10)
+        self.assertEqual(annonce.wilaya, 'test wilaya')
+        self.assertEqual(annonce.commune, 'test commune')
+
+    def testGetAnnonces(self):
+        self.client.login(email='testuser@example.com', password='secret')
+        response = self.client.get(reverse('annonces'))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        # self.assertEqual(response.data["message"], "Hello World")
+        self.assertEqual(response.data[0]['title'], 'test annonce')
+        self.assertEqual(response.data[0]['description'], 'test description')
+    
+    def testCreateFavorite(self):
+        annonce = Annonce.objects.get(title = 'test annonce')
+        user = User.objects.get(email = 'testuser@example.com')
 
-
-# class PostListCreateTestCase(APITestCase):
-#     def setUp(self):
-#         self.url = reverse("list_posts")
-
-#     def authenticate(self):
-#         self.client.post(
-#             reverse("signup"),
-#             {
-#                 "email": "jonathan@app.com",
-#                 "password": "password##!123",
-#                 "username": "jonathan",
-#             },
-#         )
-
-#         response = self.client.post(
-#             reverse("login"),
-#             {
-#                 "email": "jonathan@app.com",
-#                 "password": "password##!123",
-#             },
-#         )
-
-#         # print(response.data)
-
-#         token = response.data["tokens"]["access"]
-
-#         self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {token}")
-
-#     def test_list_posts(self):
-
-#         response = self.client.get(self.url)
-
-#         self.assertEqual(response.status_code, status.HTTP_200_OK)
-#         self.assertEqual(response.data["count"], 0)
-#         self.assertEqual(response.data["results"], [])
-
-#     def test_post_creation(self):
-#         self.authenticate()
-
-#         sample_data = {"title": "Sample title", "content": "Sample content"}
-#         response = self.client.post(reverse("list_posts"), sample_data)
-
-#         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-#         self.assertEqual(response.data["title"], sample_data["title"])
+        response = self.client.post(reverse("create_favorite") , data={"user" : user.id, "annonce" : annonce.id})
+        self.assertEqual(response.status_code, status.HTTP_200_OK)

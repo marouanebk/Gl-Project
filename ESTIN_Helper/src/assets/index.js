@@ -32,6 +32,7 @@ import arrow from "./arrow.png"
 import delete_ from "./delete.png"
 import phone from "./phone.png"
 import age from "./age.png"
+import arrowTop from "./arrow-top.png"
 
 export {
     bill,
@@ -68,4 +69,5 @@ export {
     delete_,
     phone,
     age,
+    arrowTop,
 };

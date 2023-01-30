@@ -1,5 +1,10 @@
 from django.db import models
 from base.models import User
+# from firebase_storage import FirebaseStorage
+
+def upload_to(instance, filename):
+    return 'images/{filename}'.format(filename=filename)
+
 
 # Create your models here.
 
@@ -14,10 +19,7 @@ class Annonce(models.Model):
     sold = models.IntegerField(null=False, blank=False)
     wilaya = models.TextField(null=False, blank=False)
     commune = models.TextField(null=False, blank=False)
-
-
     created = models.DateTimeField(auto_now_add=True)
-    # adr = models.ForeignKey("Adress", verbose_name=("Adress"), on_delete=models.CASCADE , null = True )
 
 
     def __str__(self):
@@ -25,10 +27,7 @@ class Annonce(models.Model):
 
 class Photo(models.Model):
     owner = models.ForeignKey("annonce", related_name=("images"), on_delete=models.CASCADE)
-    # desc = models.CharField( max_length=50)
-    image = models.ImageField(upload_to="img",  null = True , blank = True)
-    # def __str__(self):
-    #     return 
+    image = models.ImageField(upload_to=upload_to,  null = True , blank = True)
 
 
 
@@ -40,22 +39,15 @@ class Adress(models.Model):
     def __str__(self):
         return self.commune + " " +self.wilaya
 
-class Person(models.Model):
-    fname = models.CharField(max_length=20,blank=True)
 
-    def __str__(self):
-        return self.fname
 
 
 
 class Fav(models.Model):
-    liker = models.ForeignKey("Person", verbose_name=("Person"), on_delete=models.CASCADE)
-    ad  = models.ForeignKey("Adress", verbose_name=("Annonce"), on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.liker.fname+" "+self.ad.title
+    user  = models.ForeignKey("base.user", related_name=("person"), on_delete=models.CASCADE)
+    annonce  = models.ForeignKey("annonce", related_name=("Annonce"), on_delete=models.CASCADE)
 
     class Meta:
-       unique_together = ("liker", "ad")
+       unique_together = ("user", "annonce")
 
 

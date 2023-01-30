@@ -5,31 +5,83 @@ import React from "react";
 function ContactCard () {
     return(
         <center>
-            <div className="h-[600px] bg-black-gradient rounded-3xl flex flex-col relative gap-4 m-4 overflow-x-clip font-poppins text-white font-medium">
-                    <div className="flex justify-center items-center m-4">
+            <div className="h-[600px] bg-black-gradient rounded-3xl flex flex-col relative gap-4 m-4 p-4 overflow-x-clip font-poppins text-white font-medium">
+                    <div className="flex justify-center items-center">
                         <img src={contacts} className="w-8" alt="Location icon"/>
                         <span className="text-[20px] p-2">Contacts</span>
                     </div>
-                <div>
+                <div className="overflow-scroll justify-center relative w-full  flex items-center gap-6 ">
                     <ul>
-                        <li className="flex justify-start m-4 bg-black-gradient rounded-xl p-8 hover:border-2 duration-200">
-                            <a href='#'>
-                                <img className="w-10 rounded-full absolute " src={people} alt="" />
-                                <span className="pl-12 text-[16px]">abdelmalek djemaa</span>
-                            </a>
+                        <br/><br/><br/><br/><br/><br/>
+                        <li className="flex w-[300px] justify-center bg-black-gradient rounded-xl p-2 m-2 hover:border-2 duration-200">
+                            <div className="flex items-center gap-4 p-4">
+                                <img className="w-12 h-12 rounded-full"
+                                     src={people} alt=""/>
+                                <div className="flex flex-col">
+                                    <strong className="text-slate-900 text-sm font-medium dark:text-slate-200">Djemaa
+                                        Abdelmalek</strong>
+                                    <span className="text-slate-500 text-sm font-medium dark:text-slate-400">Front-end developer</span>
+                                </div>
+                            </div>
                         </li>
-                        <li className="flex justify-start m-4 bg-black-gradient rounded-xl p-8 hover:border-2 duration-200 ">
-                            <a href='#'>
-                                <img className="w-10 rounded-full absolute " src={people} alt="" />
-                                <span className="pl-12 text-[16px]">abdelmalek djemaa</span>
-                            </a>
+                        <li className="flex justify-center bg-black-gradient rounded-xl p-2 m-2 hover:border-2 duration-200">
+                            <div className="flex items-center gap-4 p-4">
+                                <img className="w-12 h-12 rounded-full"
+                                     src={people} alt=""/>
+                                <div className="flex flex-col">
+                                    <strong className="text-slate-900 text-sm font-medium dark:text-slate-200">Djemaa
+                                        Abdelmalek</strong>
+                                    <span className="text-slate-500 text-sm font-medium dark:text-slate-400">Front-end developer</span>
+                                </div>
+                            </div>
                         </li>
-                        <li className="flex justify-start m-4 bg-black-gradient rounded-xl p-8 hover:border-2 duration-200 ">
-                            <a href='#'>
-                                <img className="w-10 rounded-full absolute " src={people} alt="" />
-                                <span className="pl-12 text-[16px]">abdelmalek djemaa</span>
-                            </a>
+                        <li className="flex justify-center bg-black-gradient rounded-xl p-2 m-2 hover:border-2 duration-200">
+                            <div className="flex items-center gap-4 p-4">
+                                <img className="w-12 h-12 rounded-full"
+                                     src={people} alt=""/>
+                                <div className="flex flex-col">
+                                    <strong className="text-slate-900 text-sm font-medium dark:text-slate-200">Djemaa
+                                        Abdelmalek</strong>
+                                    <span className="text-slate-500 text-sm font-medium dark:text-slate-400">Front-end developer</span>
+                                </div>
+                            </div>
                         </li>
+                        <li className="flex justify-center bg-black-gradient rounded-xl p-2 m-2 hover:border-2 duration-200">
+                            <div className="flex items-center gap-4 p-4">
+                                <img className="w-12 h-12 rounded-full"
+                                     src={people} alt=""/>
+                                <div className="flex flex-col">
+                                    <strong className="text-slate-900 text-sm font-medium dark:text-slate-200">Djemaa
+                                        Abdelmalek</strong>
+                                    <span className="text-slate-500 text-sm font-medium dark:text-slate-400">Front-end developer</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li className="flex justify-center bg-black-gradient rounded-xl p-2 m-2 hover:border-2 duration-200">
+                            <div className="flex items-center gap-4 p-4">
+                                <img className="w-12 h-12 rounded-full"
+                                     src={people} alt=""/>
+                                <div className="flex flex-col">
+                                    <strong className="text-slate-900 text-sm font-medium dark:text-slate-200">Djemaa
+                                        Abdelmalek</strong>
+                                    <span className="text-slate-500 text-sm font-medium dark:text-slate-400">Front-end developer</span>
+                                </div>
+                            </div>
+                        </li>
+                        <li className="flex justify-center bg-black-gradient rounded-xl p-2 m-2 hover:border-2 duration-200">
+                            <div className="flex items-center gap-4 p-4">
+                                <img className="w-12 h-12 rounded-full"
+                                     src={people} alt=""/>
+                                <div className="flex flex-col">
+                                    <strong className="text-slate-900 text-sm font-medium dark:text-slate-200">Djemaa
+                                        Abdelmalek</strong>
+                                    <span className="text-slate-500 text-sm font-medium dark:text-slate-400">Front-end developer</span>
+                                </div>
+                            </div>
+                        </li>
+                        
+
+
                     </ul>
                 </div>
             </div>

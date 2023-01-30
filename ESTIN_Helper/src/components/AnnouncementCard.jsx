@@ -1,12 +1,18 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { chat, favorite, people } from "../assets/index.js";
 import { data } from "../constants/index.js";
 import { Link } from "react-router-dom";
 import "mapbox-gl/dist/mapbox-gl.css";
 import Map, { FullscreenControl, Marker, NavigationControl } from "react-map-gl";
+import { useContext } from "react";
+import AuthContext from "../context/AuthContext.jsx";
+import axios from 'redaxios';
+
 
 
 const AnnouncementCard = ({ Annonce, images }) => {
+    let { user } = useContext(AuthContext)
+
     const [lng] = useState(6.642433);
     const [lat] = useState(36.360155);
     const [showMore, setShowMore] = useState(false);
@@ -16,22 +22,39 @@ const AnnouncementCard = ({ Annonce, images }) => {
         slider.scrollLeft = slider.scrollLeft - 550;
     };
 
+    let dataString = Annonce.created;
+    const date = new Date(dataString);
+    const formattedDate = date.toLocaleDateString();
+
     const slideRight = () => {
         let slider = document.getElementById('slider');
         slider.scrollLeft = slider.scrollLeft + 550;
     };
+    async function addFavorite(event) {
+        // event.preventDefault();
+        var formData = new FormData();
+        formData.append('user', user.user_id);
+        formData.append('annonce', Annonce.id);
+        const response = await axios.post('http://127.0.0.1:8000/api/favorites/', formData);
+    }
+
+
+
+
     return (
-        <section>
+        <section >
             <div className="bg-black-gradient rounded-2xl flex flex-col relative gap-4 m-2 p-6 overflow-x-clip font-poppins text-white font-medium">
                 <div className="sm:flex justify-between items-center">
                     <img className="w-8 rounded-full absolute " src={people} alt="" />
                     <span className="pl-10 text-[16px]">abdelmalek djemaa</span>
                     <div className="flex items-start gap-6 ml-7">
+                        <span className="pl-4 mt-1 text-[10px]">{formattedDate}</span>
+
                         <Link className="cursor-pointer" to={'/Sign-in'}>
                             <img src={chat} className="w-6" alt="chat icon" />
                         </Link>
                         <Link className="cursor-pointer" to={'/Sign-in'}>
-                            <img src={favorite} className="w-6" alt="favorite icon" />
+                            <img onClick={addFavorite} src={favorite} className="w-6" alt="favorite icon" />
                         </Link>
                     </div>
                 </div>
@@ -90,10 +113,11 @@ const AnnouncementCard = ({ Annonce, images }) => {
                         id='slider'
                         className='w-full h-full rounded-[16px] overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide'
                     >
-                        {data.map((item) => (
-                            <img
+                        {images.map((item, index) => (
+
+                            <img key={index}
                                 className='rounded-[16px] w-full  h-full inline-block pr-2 pl-2 cursor-pointer'
-                                src={item.img}
+                                src={item.image}
                                 alt='/'
                             />
                         ))}
