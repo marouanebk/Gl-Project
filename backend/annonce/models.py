@@ -38,11 +38,7 @@ class Adress(models.Model):
 
     def __str__(self):
         return self.commune + " " +self.wilaya
-
-
-
-
-
+    
 class Fav(models.Model):
     user  = models.ForeignKey("base.user", related_name=("person"), on_delete=models.CASCADE)
     annonce  = models.ForeignKey("annonce", related_name=("Annonce"), on_delete=models.CASCADE)
