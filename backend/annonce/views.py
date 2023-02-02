@@ -1,5 +1,4 @@
 from django.http import response
-import django_filters.rest_framework
 
 from django.shortcuts import render
 from rest_framework.response import Response
@@ -18,7 +17,11 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.pagination import PageNumberPagination
 from base.models import User
+# from django_filters import rest_framework as filters
 
+import django_filters
+from django.utils import timezone
+from django.utils.dateparse import parse_datetime
 
 
 # from django_filters.rest_framework import DjangoFilterBackend
@@ -146,24 +149,73 @@ def getAnnounceByNameView(request, name):
     return getAnnounceByName(request, name)
 
 
+# class AnnonceFilter(filters.FilterSet):
+#     created__gte = filters.DateTimeFilter(field_name='created', lookup_expr='gte')
+
+#     class Meta:
+#         model = Annonce
+#         fields = ['created__gte']
+
+class AnnonceDateFilter(django_filters.FilterSet):
+    created__gte = django_filters.DateTimeFilter(field_name='created', method='filter_by_date_range')
+    created__lte = django_filters.DateTimeFilter(field_name='created', method='filter_by_date_range')
+    wilaya = django_filters.CharFilter(field_name='wilaya', lookup_expr='exact')
+    commune = django_filters.CharFilter(field_name='commune', lookup_expr='exact')
+
+    class Meta:
+        model = Annonce
+        fields = ['wilaya', 'commune']
+
+    def filter_by_date_range(self, queryset, name, value):
+        if not value:
+            return queryset
+
+        start_date = None
+        end_date = None
+
+        if self.data.get('created__gte'):
+            start_date = parse_datetime(self.data['created__gte'])
+        if self.data.get('created__lte'):
+            end_date = parse_datetime(self.data['created__lte'])
+
+        if start_date and end_date:
+            return queryset.filter(created__gte=start_date, created__lte=end_date)
+
+        if start_date:
+            return queryset.filter(created__gte=start_date)
+
+        if end_date:
+            return queryset.filter(created__lte=end_date)
+
+        return queryset
+
+
+
 class AnnonceSearch(generics.ListAPIView):
-    # permission_classes = [AllowAny]
     queryset = Annonce.objects.all()
     serializer_class = AnnonceSerializer
-    filter_backends = [django_filters.rest_framework.DjangoFilterBackend , SearchFilter]
-    # filter_backends = [SearchFilter, OrderingFilter]
+    filter_backends = [DjangoFilterBackend,SearchFilter, OrderingFilter]
 
-    # DjangoFilterBackend
     search_fields = ['^title' , "^description", "id"]
     filterset_fields = ["wilaya", "commune"]
+    filterset_class = AnnonceDateFilter
+
+
+
+    # def get(self, request, *args, **kwargs):
+    #     print(request.GET)
+    #     queryset = self.filter_queryset(self.queryset)
+    #     print(queryset.query)
+    #     return super().get(request, *args, **kwargs)
+
 
 class AnnonceViewSet(ModelViewSet):
     queryset = Annonce.objects.all()
     serializer_class = AnnonceSerializer
     parser_classes = (MultiPartParser, FormParser)
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    search_fields = ['title' ]
-    filterset_fields = ["description", "created"]
+    search_fields = ['title' ,"^description", ]
+    filterset_fields = [ 'wilaya',"created"]
     ordering = ('-created' , )
     pagination_class = PageNumberPagination
 

@@ -26,11 +26,11 @@ function FilterCard({ records, handleChange, visible, onClose }) {
         }
         if (start != "") {
             if (keyword != "?") keyword = keyword + "&";
-            keyword = keyword + 'created__get' + start + "T00:00:00.000000Z"
+            keyword = keyword + 'created__gte=' + start + "T00:00:00.000000Z"
         };
         if (end != "") {
             if (keyword != "?") keyword = keyword + "&";
-            keyword = keyword + 'created__lte' + end + "T00:00:00.000000Z"
+            keyword = keyword + 'created__lte=' + end + "T00:00:00.000000Z"
         };
         console.log(keyword);
         keyword = keyword.replace(/ /g, "+");
