@@ -19,6 +19,7 @@ class registrationSerializer(serializers.ModelSerializer):
             address = self.validated_data['address'],
             first_name=self.validated_data['first_name'],
             last_name=self.validated_data['last_name'],
+            phone=self.validated_data['phone'],
 
             
         )

@@ -2,6 +2,8 @@ from django.urls import path , include
 from . import views
 from rest_framework.routers import DefaultRouter
 from rest_framework_nested import routers
+from rest_framework_swagger.views import get_swagger_view
+from rest_framework.schemas import get_schema_view
 
 
 router = routers.DefaultRouter()
@@ -26,6 +28,10 @@ urlpatterns = [
     path('favorites/', views.createFavoriteRequest, name="create_favorite"),
     path('user/<int:user_id>/', views.getUserAnnonces, name="user_annonces"),
     path('all/', views.WithImages.as_view(), name="WithImages"),
+    # path('annonce-docs', get_schema_view(
+    #     title="Your Project",
+    #     description="API for all things …"
+    # ), name='annonce-docs'),
 
     
 ]

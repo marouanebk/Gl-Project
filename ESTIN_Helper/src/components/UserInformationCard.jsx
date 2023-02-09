@@ -119,7 +119,7 @@ function UserInformationCard ({visible , onClose}) {
                                 <p className="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX.
                                     800x400px)</p>
                             </div>
-                            <input id="dropzone-file2" name="cover_pic" type="file"  className="hidden"  onChange={e=>setCoverPic(e.target.files)} accept="image/*"/>
+                            <input id="dropzone-file2" name="cover_pic" type="file"  className="hidden"  onChange={e=>setCoverPic(e.target.files[0].name)} accept="image/*"/>
                         </label>
                     </div>
                 </div>

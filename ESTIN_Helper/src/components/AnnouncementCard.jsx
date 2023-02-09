@@ -72,6 +72,8 @@ const AnnouncementCard = ({ Annonce, images }) => {
                             <span className='text-gradient'>sold :{Annonce.sold}</span><br />
                             <span className='text-gradient'>wilaya :{Annonce.wilaya}</span><br />
                             <span className='text-gradient'>commune :{Annonce.commune}</span>
+                            <br/>
+                            <span className='text-gradient'>phone number  :{Annonce.user_info.phone}</span>
 
                         </div>
                         <Map

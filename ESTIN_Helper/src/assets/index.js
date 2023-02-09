@@ -31,10 +31,18 @@ import contacts from "./contacts.png"
 import arrow from "./arrow.png"
 import delete_ from "./delete.png"
 import phone from "./phone.png"
+import phone2 from "./phone.png"
 import age from "./age.png"
 import arrowTop from "./arrow-top.png"
+import google from "./google.png"
+import key from "./key.png"
+import email1 from "./email.png"
 
 export {
+    phone2,
+    email1,
+    key,
+    google,
     bill,
     logo,
     image1,

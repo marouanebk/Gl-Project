@@ -46,19 +46,6 @@ function FavoriteCard({ handleChange, handleIdChange }) {
         const item = await response.json();
         console.log("item.images");
         console.log(item.images);
-
-
-        // const array = [item];
-        // console.log("length");
-        // console.log(item.images.length);
-        // for (let i = 0; i < item.images.length; i++) {
-        //     array.images[i].image = "http://127.0.0.1:8000"+array.images[i].image;
-        //     console.log("modifying");
-        //     console.log(array.images[i].image);
-        // } 
-        // console.log(item.images);
-        // console.log("array");
-
         const array = [item];
         // handleIdChange(item.id);
 
@@ -80,7 +67,7 @@ function FavoriteCard({ handleChange, handleIdChange }) {
 
                         {favorites.map((item, index) => (
 
-                            <div onClick={() => getAnnonceByid(item.annonce.id)} >  <SmallFavorite key={index} first_name={item.annonce.user_info.first_name} last_name={item.annonce.user_info.last_name} title={item.annonce.title} />
+                            <div onClick={() => getAnnonceByid(item.annonce.id)} >  <SmallFavorite key={index} first_name={item.annonce.user_info.first_name} last_name={item.annonce.user_info.last_name} title={item.annonce.title} profile_picture={item.annonce.user_info.profile_picture} />
                             </div>
                         ))}
                     </ul>
@@ -90,12 +77,12 @@ function FavoriteCard({ handleChange, handleIdChange }) {
     )
 }
 
-function SmallFavorite({ title , first_name , last_name }) {
+function SmallFavorite({ title, first_name, last_name, profile_picture }) {
 
     return <li className="flex justify-center bg-black-gradient rounded-xl p-2 m-2 hover:border-2 duration-200">
         <div className="flex items-center gap-4 p-4">
             <img className="w-12 h-12 rounded-full"
-                src={people} alt="" />
+                src={"http://127.0.0.1:8000"+profile_picture} alt="" />
             <div className="flex flex-col">
                 <strong className="text-slate-900 text-sm font-medium dark:text-slate-200"> {first_name} {last_name}</strong>
                 <span className="text-slate-500 text-sm font-medium dark:text-slate-400">{title}</span>

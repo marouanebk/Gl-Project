@@ -9,10 +9,14 @@ import { SnackBar } from "./index.js";
 function FilterCard({ records, handleChange, visible, onClose }) {
     const [wilaya, setwilaya] = useState('');
     const [commune, setcommune] = useState('');
+    const [theme, settheme] = useState('');
+    const [category, setcategory] = useState('');
+    const [modality, setmodality] = useState('');
+
     const [start, setstart] = useState('');
     const [end, setend] = useState('');
-    const [ShowSnackBar , setShowSnackBar] = useState(false);
-    const handleOnClose = () => setShowSnackBar(false) ;
+    const [ShowSnackBar, setShowSnackBar] = useState(false);
+    const handleOnClose = () => setShowSnackBar(false);
 
     const filterHandler = async (event) => {
         event.preventDefault();
@@ -23,6 +27,18 @@ function FilterCard({ records, handleChange, visible, onClose }) {
         if (commune != "") {
             if (keyword != "?") keyword = keyword + "&";
             keyword = keyword + 'commune=' + commune;
+        }
+        if (theme != "") {
+            if (keyword != "?") keyword = keyword + "&";
+            keyword = keyword + 'theme=' + theme;
+        }
+        if (category != "") {
+            if (keyword != "?") keyword = keyword + "&";
+            keyword = keyword + 'category=' + category;
+        }
+        if (modality != "") {
+            if (keyword != "?") keyword = keyword + "&";
+            keyword = keyword + 'modality=' + modality;
         }
         if (start != "") {
             if (keyword != "?") keyword = keyword + "&";
@@ -37,6 +53,8 @@ function FilterCard({ records, handleChange, visible, onClose }) {
 
 
         // http://127.0.0.1:8000/api/annonces/custom/created__get2022-12-13T00:00:00.000000Z
+        let apiTest = `http://127.0.0.1:8000/api/annonces/custom/${keyword}`;
+        console.log(apiTest);
         let results = await fetch(`http://127.0.0.1:8000/api/annonces/custom/${keyword}`);
         results = await results.json();
         if (results) {
@@ -44,12 +62,12 @@ function FilterCard({ records, handleChange, visible, onClose }) {
             setShowSnackBar(true);
         }
 
-  
+
     }
     // const [records, setRecords] = useState([]);
 
     if (!visible) return null;
-    const Close = () =>    {
+    const Close = () => {
         setShowSnackBar(false);
         onClose();
 
@@ -63,7 +81,9 @@ function FilterCard({ records, handleChange, visible, onClose }) {
                     <div className=" items-center flex flex-wrap sm:justify-start justify-center w-full relative">
                         <div className="flex justify-start items-center mb-8 m-0">
                             <label className="text-white p-2 text-[14px]">Category:</label>
-                            <select className="h-12 w-full border-solid border-2 bg-black-gradient text-white rounded-[50px] p-2 text-[14px]" >
+                            <select className="h-12 w-full border-solid border-2 bg-black-gradient text-white rounded-[50px] p-2 text-[14px]" value={category} onChange={(e) => setcategory(e.target.value)}>
+                                <option value="">--select category--</option>
+                                <option value="PrimarySchool">Primary school</option>
                                 <option value="PrimarySchool">Primary school</option>
                                 <option value="MiddleSchool">Middle school</option>
                                 <option value="HighSchool">High school</option>
@@ -72,7 +92,9 @@ function FilterCard({ records, handleChange, visible, onClose }) {
                         </div>
                         <div className="flex justify-start items-center relative mb-8">
                             <label className="text-white p-2 text-[14px]">Theme:</label>
-                            <select className="h-12 w-full border-solid border-2 bg-black-gradient text-white rounded-[50px] p-2 text-[14px]">
+                            <select className="h-12 w-full border-solid border-2 bg-black-gradient text-white rounded-[50px] p-2 text-[14px]" value={theme} onChange={(e) => settheme(e.target.value)}>
+                                <option value="">--select theme--</option>
+
                                 <option value="Mathematics">Mathematics</option>
                                 <option value="Physics">Physics</option>
                                 <option value="Sciences">Sciences</option>
@@ -82,7 +104,8 @@ function FilterCard({ records, handleChange, visible, onClose }) {
                         </div>
                         <div className="flex justify-start items-center mb-8 m-0">
                             <label className="text-white p-2 text-[14px]">Modality:</label>
-                            <select className="h-12 w-full border-solid border-2 bg-black-gradient text-white rounded-[50px] p-2 text-[14px]">
+                            <select className="h-12 w-full border-solid border-2 bg-black-gradient text-white rounded-[50px] p-2 text-[14px]" value={modality} onChange={(e) => setmodality(e.target.value)}>
+                                <option value="">--select modality--</option>
                                 <option value="Online">Online</option>
                                 <option value="Offline">Offline</option>
                             </select>
@@ -121,10 +144,10 @@ function FilterCard({ records, handleChange, visible, onClose }) {
                         </div>
                     </div>
                     <center>
-                        <button  type="submit" style={{ cursor: "pointer" }} className={`${styles.paragraph}left-0 text-[20px]  pt-3 pb-3 pl-7 pr-7 items-center bg-blue-gradient rounded-[30px]`}>
+                        <button type="submit" style={{ cursor: "pointer" }} className={`${styles.paragraph}left-0 text-[20px]  pt-3 pb-3 pl-7 pr-7 items-center bg-blue-gradient rounded-[30px]`}>
                             Filter
                         </button>
-                        <SnackBar onClose={handleOnClose} visible = {ShowSnackBar}/>
+                        <SnackBar onClose={handleOnClose} visible={ShowSnackBar} />
                     </center>
                 </div>
             </div>

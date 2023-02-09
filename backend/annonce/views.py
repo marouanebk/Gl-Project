@@ -161,10 +161,13 @@ class AnnonceDateFilter(django_filters.FilterSet):
     created__lte = django_filters.DateTimeFilter(field_name='created', method='filter_by_date_range')
     wilaya = django_filters.CharFilter(field_name='wilaya', lookup_expr='exact')
     commune = django_filters.CharFilter(field_name='commune', lookup_expr='exact')
+    theme = django_filters.CharFilter(field_name='theme', lookup_expr='exact')
+    category = django_filters.CharFilter(field_name='category', lookup_expr='exact')
+    modality = django_filters.CharFilter(field_name='modality', lookup_expr='exact')
 
     class Meta:
         model = Annonce
-        fields = ['wilaya', 'commune']
+        fields = ['wilaya', 'commune','theme','category','modality']
 
     def filter_by_date_range(self, queryset, name, value):
         if not value:
@@ -197,7 +200,7 @@ class AnnonceSearch(generics.ListAPIView):
     filter_backends = [DjangoFilterBackend,SearchFilter, OrderingFilter]
 
     search_fields = ['^title' , "^description", "id"]
-    filterset_fields = ["wilaya", "commune"]
+    filterset_fields = ["wilaya", "commune" , "modality","theme" , "category"]
     filterset_class = AnnonceDateFilter
 
 

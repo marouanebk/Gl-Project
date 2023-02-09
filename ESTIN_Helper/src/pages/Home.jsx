@@ -107,7 +107,7 @@ function Home() {
                                             onClick={() => window.open(social.link, "_self")}
                                     />
                                 ))}
-                                <img src="/logout.png" className={`w-[35px] h-[35px] object-contain cursor-pointer "mr-12" : "mr-0"
+                                <img src="/logout.png" className={`w-[35px] h-[35px] ml-6 object-contain cursor-pointer "mr-12" : "mr-0"
                                             }`} alt="" onClick={logoutUser} />
                             </ul>
                             <div className="lg:hidden flex flex-1 justify-end items-center z-50 ">
